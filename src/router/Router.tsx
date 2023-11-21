@@ -8,7 +8,7 @@ const router = createBrowserRouter([
         element: <Main />,
     },
     {
-        path:"/login", //부모의 영향으로 '/about'을 의미함
+        path:"/login",
         element: <Login />
     }
 ]

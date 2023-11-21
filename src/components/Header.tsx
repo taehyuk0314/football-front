@@ -1,51 +1,82 @@
 import React from 'react';
-import { Button } from './../stories/Button';
+import { styled, alpha } from '@mui/material/styles';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import InputBase from '@mui/material/InputBase';
+import Badge from '@mui/material/Badge';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MailIcon from '@mui/icons-material/Mail';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import MoreIcon from '@mui/icons-material/MoreVert';
+import { Link } from "react-router-dom";
 
 export default class Header extends React.Component{
     render(): React.ReactNode {
         return(
             <header>
-                <div className="storybook-header">
-                    <div>
-                        <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                        <g fill="none" fillRule="evenodd">
-                            <path
-                            d="M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z"
-                            fill="#FFF"
-                            />
-                            <path
-                            d="M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z"
-                            fill="#555AB9"
-                            />
-                            <path
-                            d="M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z"
-                            fill="#91BAF8"
-                            />
-                        </g>
-                        </svg>
-                        <h1>Acme</h1>
-                    </div>
-                    <div>
-                        {/* <Button size="small" onClick={onLogin} label="Log in" />
-                        <Route exact path="/login" component={Login} />
-                        <Button primary size="small" onClick={onCreateAccount} label="Sign up" />                         */}
-                        {/* {user ? (
-                        <>
-                            <span className="welcome">
-                            Welcome, <b>{user.name}</b>!
-                            </span>
-                            <Route exact path="/" component={Main} />
-                            <Button size="small" onClick={onLogout} label="Log out" />
-                        </>
-                        ) : (
-                        <>
-                            <Button size="small" onClick={onLogin} label="Log in" />
-                            <Route exact path="/login" component={Login} />
-                            <Button primary size="small" onClick={onCreateAccount} label="Sign up" />
-                        </>
-                        )} */}
-                    </div>
-                </div>
+                <Box sx={{ flexGrow: 1 }}>
+                    <AppBar position="static" color='transparent'>
+                        <Toolbar>
+                            <Typography
+                                variant="h6"
+                                noWrap
+                                component="div"
+                                sx={{ display: { xs: 'none', sm: 'block' } }}
+                            >
+                                홈
+                                {/* <Link to="/"></Link> */}
+                            </Typography>
+                            <Box sx={{ flexGrow: 1 }} />
+                            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+                                <Badge badgeContent={4} color="error">
+                                    <MailIcon />
+                                </Badge>
+                                </IconButton>
+                                <IconButton
+                                size="large"
+                                aria-label="show 17 new notifications"
+                                color="inherit"
+                                >
+                                <Badge badgeContent={17} color="error">
+                                    <NotificationsIcon />
+                                </Badge>
+                                </IconButton>
+                                <IconButton
+                                size="large"
+                                edge="end"
+                                aria-label="account of current user"
+                                // aria-controls={menuId}
+                                aria-haspopup="true"
+                                // onClick={handleProfileMenuOpen}
+                                color="inherit"
+                                >
+                                <AccountCircle />
+                                </IconButton>
+                            </Box>
+                            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                                <IconButton
+                                size="large"
+                                aria-label="show more"
+                                // aria-controls={mobileMenuId}
+                                aria-haspopup="true"
+                                // onClick={handleMobileMenuOpen}
+                                color="inherit"
+                                >
+                                <MoreIcon />
+                                </IconButton>
+                            </Box>
+                        </Toolbar>
+                    </AppBar>
+                {/* {renderMobileMenu} */}
+                {/* {renderMenu} */}
+                </Box>
             </header>            
         )
     }

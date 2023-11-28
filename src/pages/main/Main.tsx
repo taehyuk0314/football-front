@@ -12,13 +12,22 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
+import { BoardMasterVO } from "../board/vo/board.vo";
 
 export default class Main extends React.Component {
-    hello =()=>{
-        axios.get("/boards").then((r)=>{
+    
+    componentDidMount(): void {
+        axios.get("/boards").then((r: any)=>{
+            alert(r)
+        })            
+    }
+
+    hello(): void{
+        axios.get("/boards").then((r: any)=>{
             alert(r)
         }) 
     }
+
     render(): React.ReactNode {
         const defaultTheme = createTheme;
         const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];

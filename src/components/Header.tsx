@@ -29,7 +29,7 @@ export default class Header extends React.Component{
                                 component="div"
                                 sx={{ display: { xs: 'none', sm: 'block' } }}
                             >
-                                홈
+                                FOOT
                                 {/* <Link to="/"></Link> */}
                             </Typography>
                             <Box sx={{ flexGrow: 1 }} />

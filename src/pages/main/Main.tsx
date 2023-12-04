@@ -15,16 +15,17 @@ import axios from "axios";
 import { BoardMasterVO } from "../board/vo/board.vo";
 
 export default class Main extends React.Component {
-    
-    componentDidMount(): void {
+    board = [] as BoardMasterVO[];
+
+    componentDidMount() {
         axios.get("/boards").then((r: any)=>{
-            alert(r)
+            this.board = r.data;
         })            
     }
 
     hello(): void{
         axios.get("/boards").then((r: any)=>{
-            alert(r)
+            alert(JSON.stringify(r))
         }) 
     }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,27 +10,41 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { LoginIVO } from "./vo/login.vo";
+import axios from "axios";
 
-export default class Login extends React.Component {
+export default class Login extends React.Component<any,any> {
+    constructor(props:{}) {
+        super(props);
+        this.state = {
+            member: {} as LoginIVO
+        }
+    }
+
     defaultTheme = createTheme();
+
+    handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        let member = this.state.member;
+        member[name] = value;
+        this.setState({member});        
+    }
+
+    btnLogin = () => {
+        if(!this.state.member.memId) {
+            alert("아이디를 입력하세요.");
+            return;
+        }
+
+        if(!this.state.member.password) {
+            alert("비밀번호를 입력하세요.");
+            return;
+        }
+        axios.post("/login", this.state.member).then(() => {
+          alert("로그인 성공!")
+        })
+    }; 
     render(): React.ReactNode {
-        const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-            event.preventDefault();
-            const data = new FormData(event.currentTarget);
-            if(!data.get('memId')) {
-                alert("아이디를 입력하세요.");
-            }
-
-            if(!data.get('password')) {
-                alert("비밀번호를 입력하세요.");
-            }
-
-            console.log({
-                memId: data.get('memId'),
-                password: data.get('password'),
-            });
-        }; 
-
         return(
             <>
             <ThemeProvider theme={this.defaultTheme}>
@@ -50,7 +64,7 @@ export default class Login extends React.Component {
                     <Typography component="h1" variant="h5">
                         로고
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <Box sx={{ mt: 1 }}>
                         <TextField
                         margin="normal"
                         required
@@ -59,6 +73,8 @@ export default class Login extends React.Component {
                         label="아이디"
                         name="memId"
                         autoComplete="email"
+                        onChange={this.handleChange}
+                        value={this.state.member.memId || ""}
                         autoFocus
                         />
                         <TextField
@@ -69,12 +85,15 @@ export default class Login extends React.Component {
                         label="비밀번호"
                         type="password"
                         id="password"
+                        onChange={this.handleChange}
+                        value={this.state.member.password || ""}
                         autoComplete="current-password"
                         />
                         <Button
                         type="submit"
                         fullWidth
                         variant="contained"
+                        onClick={this.btnLogin}
                         sx={{ mt: 3, mb: 2 }}
                         >
                         로그인

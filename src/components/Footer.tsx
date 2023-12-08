@@ -6,9 +6,9 @@ export default class Footer extends React.Component {
     render(): React.ReactNode {
         return(
             <>
-                <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
+                <Box sx={{ bgcolor: 'text.disabled', p: 6 }} component="footer">
                     <Typography variant="h6" align="center" gutterBottom>
-                    Footer
+                    푸터지만 없어질지도 모르는 존재
                     </Typography>
                     <Typography
                     variant="subtitle1"
@@ -16,7 +16,7 @@ export default class Footer extends React.Component {
                     color="text.secondary"
                     component="p"
                     >
-                    Something here to give the footer a purpose!
+                    푸푸 터터
                     </Typography>
                 </Box>            
             </>

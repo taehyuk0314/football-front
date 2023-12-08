@@ -2,19 +2,37 @@ import { createBrowserRouter } from "react-router-dom";
 import Login from "../pages/login/Login";
 import Main from "../pages/main/Main";
 import Join from "../pages/login/Join";
+import LayoutMain from "../layout/LayoutMain";
+import Ugcs from "../pages/board/Ugcs";
+import Ugc from "../pages/board/Ugc";
 
 const router = createBrowserRouter([
     {
         path:"/",
-        element: <Main />,
-    },
-    {
-        path:"/login",
-        element: <Login />
+        element: <LayoutMain />,
+        children: [
+            {
+              path: "/",
+              element: <Main />,
+            },
+            //** 커뮤니티 */
+            {
+              path: "/ugcs",
+              element: <Ugcs />,
+            },
+            {
+              path: "/ugc",
+              element: <Ugc />,
+            },
+        ]
     },
     {
         path:"/join",
         element: <Join />
+    },
+    {
+        path:"/login",
+        element: <Login />
     }
 ]
 

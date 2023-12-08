@@ -9,3 +9,9 @@ export interface BoardMasterVO {
     updUser: number;
     updDt: string;
 }
+
+export interface BoardUgcVO extends BoardMasterVO {
+    boardNo: number;
+    useReply: boolean;
+    useNickname: boolean;
+}

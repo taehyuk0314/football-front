@@ -41,10 +41,12 @@ export default class Login extends React.Component<any,any> {
             return;
         }
         axios.post("/login", this.state.member).then(() => {
-          alert("로그인 성공!")
+            alert("로그인 성공!")
+            this.props.navigate('/join');
         })
     }; 
     render(): React.ReactNode {
+        const { member } = this.state;
         return(
             <>
             <ThemeProvider theme={this.defaultTheme}>
@@ -74,7 +76,7 @@ export default class Login extends React.Component<any,any> {
                         name="memId"
                         autoComplete="email"
                         onChange={this.handleChange}
-                        value={this.state.member.memId || ""}
+                        value={ member.memId || ""}
                         autoFocus
                         />
                         <TextField
@@ -86,7 +88,7 @@ export default class Login extends React.Component<any,any> {
                         type="password"
                         id="password"
                         onChange={this.handleChange}
-                        value={this.state.member.password || ""}
+                        value={ member.password || "" }
                         autoComplete="current-password"
                         />
                         <Button

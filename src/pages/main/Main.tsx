@@ -18,13 +18,13 @@ export default class Main extends React.Component {
     board = [] as BoardMasterVO[];
 
     componentDidMount() {
-        axios.get("/boards").then((r: any)=>{
+        axios.get("/board/ugcs").then((r: any)=>{
             this.board = r.data;
         })            
     }
 
     hello(): void{
-        axios.get("/boards").then((r: any)=>{
+        axios.get("/board/ugcs").then((r: any)=>{
             alert(JSON.stringify(r))
         }) 
     }

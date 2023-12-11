@@ -5,6 +5,7 @@ import Join from "../pages/login/Join";
 import LayoutMain from "../layout/LayoutMain";
 import Ugcs from "../pages/board/Ugcs";
 import Ugc from "../pages/board/Ugc";
+import Mypage from "../pages/mypage/Mypage";
 
 const router = createBrowserRouter([
     {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
             {
               path: "/ugc",
               element: <Ugc />,
+            },
+            {
+              path: "/mypage",
+              element: <Mypage />,
             },
         ]
     },

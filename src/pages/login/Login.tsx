@@ -42,9 +42,20 @@ export default class Login extends React.Component<any,any> {
         }
         axios.post("/login", this.state.member).then(() => {
             alert("로그인 성공!")
-            this.props.navigate('/join');
+            this.next();
         })
     }; 
+
+    next() {
+        // vue세션에 회원정보 저장
+        axios.get("/login/simple-details").then((r) => {
+            console.log(r)
+        });
+    }    
+    componentDidMount(): void {
+        this.next();
+    }
+
     render(): React.ReactNode {
         const { member } = this.state;
         return(

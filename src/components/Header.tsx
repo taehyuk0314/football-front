@@ -9,8 +9,17 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import axios from 'axios';
 
 export default class Header extends React.Component{
+
+    logout = async () => {
+        const result = await axios.get("/logout");
+        if(result) {
+            alert("로그아웃 성공")
+        }
+    }
+
     render(): React.ReactNode {
         return(
             <header>
@@ -52,6 +61,15 @@ export default class Header extends React.Component{
                                 color="inherit"
                                 >
                                 <AccountCircle />
+                                </IconButton>
+                                <IconButton
+                                size="large"
+                                edge="end"
+                                aria-label="account of current user"
+                                onClick={this.logout}
+                                color="inherit"
+                                >
+                                    <AccountCircle />
                                 </IconButton>
                             </Box>
                             <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

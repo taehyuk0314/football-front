@@ -16,7 +16,7 @@ import { BoardMasterVO } from "../board/vo/board.vo";
 
 export default class Main extends React.Component {
     board = [] as BoardMasterVO[];
-
+    defaultTheme = createTheme;
     componentDidMount() {
         axios.get("/board/ugcs").then((r: any)=>{
             this.board = r.data;
@@ -30,11 +30,10 @@ export default class Main extends React.Component {
     }
 
     render(): React.ReactNode {
-        const defaultTheme = createTheme;
         const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
         return(
             <>
-                <ThemeProvider theme={defaultTheme}>
+                <ThemeProvider theme={this.defaultTheme}>
                     <CssBaseline />
                     <main>
                         {/* Hero unit */}

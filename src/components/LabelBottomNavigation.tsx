@@ -13,15 +13,11 @@ export default class LabelBottomNavigation extends React.Component {
             <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
                 <BottomNavigation
                     showLabels
-                    // value={value}
-                    // onChange={(event, newValue) => {
-                    //     setValue(newValue);
-                    // }}
                     >
-                    <Link to="/"><BottomNavigationAction icon={<HomeIcon />} /></Link> 
-                    <BottomNavigationAction icon={<FavoriteIcon />} />
-                    <Link to="/ugcs"><BottomNavigationAction icon={<NotificationsRoundedIcon />} /></Link>
-                    <BottomNavigationAction icon={<AccountBoxRoundedIcon />} />
+                    <BottomNavigationAction component={Link} to="/" icon={<HomeIcon />} /> 
+                    <BottomNavigationAction component={Link} to="/" icon={<FavoriteIcon />} />
+                    <BottomNavigationAction component={Link} to="/ugcs" icon={<NotificationsRoundedIcon />} />
+                    <BottomNavigationAction component={Link} to="/mypage" icon={<AccountBoxRoundedIcon />} />
                 </BottomNavigation>
             </Paper>
         )

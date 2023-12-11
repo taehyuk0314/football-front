@@ -14,9 +14,11 @@ axios.defaults.paramsSerializer = (params) => {
   });
   return result.substring(0, result.length - 1);
 }
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <App/>

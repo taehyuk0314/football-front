@@ -4,15 +4,13 @@ import Footer from "../components/Footer";
 import { Outlet } from "react-router-dom";
 import LabelBottomNavigation from "../components/LabelBottomNavigation";
 
-export default class LayoutMain extends React.Component {
-    render(): React.ReactNode {
-        return(
-            <>
-                <Header/>
-                <Outlet/>
-                <Footer/>
-                <LabelBottomNavigation/>                  
-            </>
-        ) 
-    }
+export default function LayoutMain() {
+    return(
+        <>
+            <Header/>
+            <Outlet/>
+            <Footer/>
+            <LabelBottomNavigation/>                  
+        </>
+    ) 
 }

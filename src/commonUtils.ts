@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default class CommonUtils {
+export default function CommonUtils () {
 
 
 }

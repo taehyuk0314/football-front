@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -14,99 +14,97 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
 import { BoardMasterVO } from "../board/vo/board.vo";
 
-export default class Main extends React.Component {
-    board = [] as BoardMasterVO[];
-    defaultTheme = createTheme;
-    componentDidMount() {
+export default function Main() {
+    const [board,setBoard] = useState([] as BoardMasterVO[]);
+    const defaultTheme = createTheme;
+    useEffect(()=>{
         axios.get("/board/ugcs").then((r: any)=>{
-            this.board = r.data;
-        })            
-    }
+            setBoard(r.data);
+        })     
+    })
 
-    hello(): void{
+    const hello = () => {
         axios.get("/board/ugcs").then((r: any)=>{
             alert(JSON.stringify(r))
         }) 
     }
 
-    render(): React.ReactNode {
-        const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-        return(
-            <>
-                <ThemeProvider theme={this.defaultTheme}>
-                    <CssBaseline />
-                    <main>
-                        {/* Hero unit */}
-                        <Box
-                        sx={{
-                            bgcolor: 'background.paper',
-                            pt: 8,
-                            pb: 6,
-                        }}
+    const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    return(
+        <>
+            <ThemeProvider theme={defaultTheme}>
+                <CssBaseline />
+                <main>
+                    {/* Hero unit */}
+                    <Box
+                    sx={{
+                        bgcolor: 'background.paper',
+                        pt: 8,
+                        pb: 6,
+                    }}
+                    >
+                    <Container maxWidth="sm">
+                        <Typography
+                        component="h1"
+                        variant="h2"
+                        align="center"
+                        color="text.primary"
+                        gutterBottom
                         >
-                        <Container maxWidth="sm">
-                            <Typography
-                            component="h1"
-                            variant="h2"
-                            align="center"
-                            color="text.primary"
-                            gutterBottom
+                        Album layout
+                        </Typography>
+                        <Typography variant="h5" align="center" color="text.secondary" paragraph>
+                        Something short and leading about the collection below—its contents,
+                        the creator, etc. Make it short and sweet, but not too short so folks
+                        don&apos;t simply skip over it entirely.
+                        </Typography>
+                        <Stack
+                        sx={{ pt: 4 }}
+                        direction="row"
+                        spacing={2}
+                        justifyContent="center"
+                        >
+                        <Button onClick={hello} variant="contained">Main call to action</Button>
+                        <Button variant="outlined">Secondary action</Button>
+                        </Stack>
+                    </Container>
+                    </Box>
+                    <Container sx={{ py: 8 }} maxWidth="md">
+                    {/* End hero unit */}
+                    <Grid container spacing={4}>
+                        {cards.map((card) => (
+                        <Grid item key={card} xs={12} sm={6} md={4}>
+                            <Card
+                            sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                             >
-                            Album layout
-                            </Typography>
-                            <Typography variant="h5" align="center" color="text.secondary" paragraph>
-                            Something short and leading about the collection below—its contents,
-                            the creator, etc. Make it short and sweet, but not too short so folks
-                            don&apos;t simply skip over it entirely.
-                            </Typography>
-                            <Stack
-                            sx={{ pt: 4 }}
-                            direction="row"
-                            spacing={2}
-                            justifyContent="center"
-                            >
-                            <Button onClick={this.hello} variant="contained">Main call to action</Button>
-                            <Button variant="outlined">Secondary action</Button>
-                            </Stack>
-                        </Container>
-                        </Box>
-                        <Container sx={{ py: 8 }} maxWidth="md">
-                        {/* End hero unit */}
-                        <Grid container spacing={4}>
-                            {cards.map((card) => (
-                            <Grid item key={card} xs={12} sm={6} md={4}>
-                                <Card
-                                sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                                >
-                                <CardMedia
-                                    component="div"
-                                    sx={{
-                                    // 16:9
-                                    pt: '56.25%',
-                                    }}
-                                    image="https://source.unsplash.com/random?wallpapers"
-                                />
-                                <CardContent sx={{ flexGrow: 1 }}>
-                                    <Typography gutterBottom variant="h5" component="h2">
-                                    Heading
-                                    </Typography>
-                                    <Typography>
-                                    This is a media card. You can use this section to describe the
-                                    content.
-                                    </Typography>
-                                </CardContent>
-                                <CardActions>
-                                    <Button size="small">View</Button>
-                                    <Button size="small">Edit</Button>
-                                </CardActions>
-                                </Card>
-                            </Grid>
-                            ))}
+                            <CardMedia
+                                component="div"
+                                sx={{
+                                // 16:9
+                                pt: '56.25%',
+                                }}
+                                image="https://source.unsplash.com/random?wallpapers"
+                            />
+                            <CardContent sx={{ flexGrow: 1 }}>
+                                <Typography gutterBottom variant="h5" component="h2">
+                                Heading
+                                </Typography>
+                                <Typography>
+                                This is a media card. You can use this section to describe the
+                                content.
+                                </Typography>
+                            </CardContent>
+                            <CardActions>
+                                <Button size="small">View</Button>
+                                <Button size="small">Edit</Button>
+                            </CardActions>
+                            </Card>
                         </Grid>
-                        </Container>
-                    </main>
-                </ThemeProvider>
-            </>
-        )
-    }
+                        ))}
+                    </Grid>
+                    </Container>
+                </main>
+            </ThemeProvider>
+        </>
+    )
 }

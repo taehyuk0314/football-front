@@ -1,13 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
-import Header from "./components/Header";
 import { RouterProvider } from 'react-router-dom';
-import Footer from './components/Footer';
 import router from './router/Router';
 import axios from 'axios';
 
-export default class App extends React.Component  {
-  componentDidMount() {
+export default function App() {
+  useEffect(()=>{
     axios.interceptors.request.use((config) => {
       return config;
     });
@@ -36,16 +34,14 @@ export default class App extends React.Component  {
         return Promise.reject(error);
       }
     );
-
-  }
-  render() {
-    return (
-      <>
-        <div className="App">
-          <RouterProvider router= {router} /> 
-        </div>        
-      </>
-    )
-  }
+  })
+  
+  return (
+    <>
+      <div className="App">
+        <RouterProvider router= {router} /> 
+      </div>        
+    </>
+  )
  
 }

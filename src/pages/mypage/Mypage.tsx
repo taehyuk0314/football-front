@@ -1,17 +1,14 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 
-export default class Mypage extends React.Component<any,any> {
-    componentDidMount(): void {
+export default function Mypage() {
+    useEffect(()=>{
         axios.get("/mypage").then((r)=>{
             console.log(r.data)
         })
-    }
-    render(): React.ReactNode {
-        return(
-            <>
-            
-            </>
-        )
-    }
+    })
+    return(
+        <>
+        </>
+    )
 }

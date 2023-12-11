@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,121 +13,111 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { LoginIVO } from "./vo/login.vo";
 import axios from "axios";
 
-export default class Login extends React.Component<any,any> {
-    constructor(props:{}) {
-        super(props);
-        this.state = {
-            member: {} as LoginIVO
-        }
-    }
+export default function Login () {
+    const defaultTheme = createTheme();
 
-    defaultTheme = createTheme();
+    const [member, setMember] = useState({} as LoginIVO);
 
-    handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        let member = this.state.member;
-        member[name] = value;
-        this.setState({member});        
     }
 
-    btnLogin = () => {
-        if(!this.state.member.memId) {
+    const btnLogin = () => {
+        if(!member.id) {
             alert("아이디를 입력하세요.");
             return;
         }
 
-        if(!this.state.member.password) {
+        if(!member.password) {
             alert("비밀번호를 입력하세요.");
             return;
         }
-        axios.post("/login", this.state.member).then(() => {
+        axios.post("/login", member).then(() => {
             alert("로그인 성공!")
-            this.next();
+            next();
         })
     }; 
 
-    next() {
+    const next = () => {
         // vue세션에 회원정보 저장
         axios.get("/login/simple-details").then((r) => {
             console.log(r)
         });
     }    
-    componentDidMount(): void {
-        this.next();
-    }
 
-    render(): React.ReactNode {
-        const { member } = this.state;
-        return(
-            <>
-            <ThemeProvider theme={this.defaultTheme}>
-                <Container component="main" maxWidth="xs">
-                    <CssBaseline />
-                    <Box
-                    sx={{
-                        marginTop: 8,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                    }}
+    useEffect(()=>{
+        next();
+    })
+
+    return(
+        <>
+        <ThemeProvider theme={defaultTheme}>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <Box
+                sx={{
+                    marginTop: 8,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
+                >
+                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                    <LockOutlinedIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                    로고
+                </Typography>
+                <Box sx={{ mt: 1 }}>
+                    <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="memId"
+                    label="아이디"
+                    name="memId"
+                    autoComplete="email"
+                    // onChange={this.handleChange}
+                    value={ member.id || ""}
+                    autoFocus
+                    />
+                    <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    label="비밀번호"
+                    type="password"
+                    id="password"
+                    // onChange={this.handleChange}
+                    value={ member.password || "" }
+                    autoComplete="current-password"
+                    />
+                    <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    onClick={btnLogin}
+                    sx={{ mt: 3, mb: 2 }}
                     >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        로고
-                    </Typography>
-                    <Box sx={{ mt: 1 }}>
-                        <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="memId"
-                        label="아이디"
-                        name="memId"
-                        autoComplete="email"
-                        onChange={this.handleChange}
-                        value={ member.memId || ""}
-                        autoFocus
-                        />
-                        <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="비밀번호"
-                        type="password"
-                        id="password"
-                        onChange={this.handleChange}
-                        value={ member.password || "" }
-                        autoComplete="current-password"
-                        />
-                        <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        onClick={this.btnLogin}
-                        sx={{ mt: 3, mb: 2 }}
-                        >
-                        로그인
-                        </Button>
-                        <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">
-                                비밀번호를 잊어버리셨습니까?
-                            </Link>
-                        </Grid>
-                        <Grid item>
-                            <Link href="#" variant="body2">
-                                계정이 없으십니까?
-                            </Link>
-                        </Grid>
-                        </Grid>
-                    </Box>
-                    </Box>
-                </Container>
-                </ThemeProvider>
-            </>
-        )
-    }
+                    로그인
+                    </Button>
+                    <Grid container>
+                    <Grid item xs>
+                        <Link href="#" variant="body2">
+                            비밀번호를 잊어버리셨습니까?
+                        </Link>
+                    </Grid>
+                    <Grid item>
+                        <Link href="#" variant="body2">
+                            계정이 없으십니까?
+                        </Link>
+                    </Grid>
+                    </Grid>
+                </Box>
+                </Box>
+            </Container>
+            </ThemeProvider>
+        </>
+    )
 }

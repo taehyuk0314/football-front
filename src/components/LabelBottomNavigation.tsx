@@ -6,20 +6,17 @@ import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded';
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default class LabelBottomNavigation extends React.Component {
-    
-    render(): React.ReactNode {
-        return (
-            <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-                <BottomNavigation
-                    showLabels
-                    >
-                    <BottomNavigationAction component={Link} to="/" icon={<HomeIcon />} /> 
-                    <BottomNavigationAction component={Link} to="/" icon={<FavoriteIcon />} />
-                    <BottomNavigationAction component={Link} to="/ugcs" icon={<NotificationsRoundedIcon />} />
-                    <BottomNavigationAction component={Link} to="/mypage" icon={<AccountBoxRoundedIcon />} />
-                </BottomNavigation>
-            </Paper>
-        )
-    }
+export default function LabelBottomNavigation () {
+    return (
+        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+            <BottomNavigation
+                showLabels
+                >
+                <BottomNavigationAction component={Link} to="/" icon={<HomeIcon />} /> 
+                <BottomNavigationAction component={Link} to="/" icon={<FavoriteIcon />} />
+                <BottomNavigationAction component={Link} to="/ugcs" icon={<NotificationsRoundedIcon />} />
+                <BottomNavigationAction component={Link} to="/mypage" icon={<AccountBoxRoundedIcon />} />
+            </BottomNavigation>
+        </Paper>
+    )
 }

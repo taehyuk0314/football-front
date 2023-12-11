@@ -17,10 +17,10 @@ export default function Login () {
     const defaultTheme = createTheme();
 
     const [member, setMember] = useState({} as LoginIVO);
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-    }
+    const handleChange = ( e: ChangeEvent<HTMLInputElement> ) => {
+        const { value, name } = e.target;
+        setMember({...member,[name]: value});
+    };
 
     const btnLogin = () => {
         if(!member.id) {
@@ -73,11 +73,11 @@ export default function Login () {
                     margin="normal"
                     required
                     fullWidth
-                    id="memId"
+                    id="id"
                     label="아이디"
-                    name="memId"
+                    name="id"
                     autoComplete="email"
-                    // onChange={this.handleChange}
+                    onChange={handleChange}
                     value={ member.id || ""}
                     autoFocus
                     />
@@ -89,7 +89,7 @@ export default function Login () {
                     label="비밀번호"
                     type="password"
                     id="password"
-                    // onChange={this.handleChange}
+                    onChange={handleChange}
                     value={ member.password || "" }
                     autoComplete="current-password"
                     />

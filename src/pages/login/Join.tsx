@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -14,7 +14,10 @@ import { JoinVO } from "./vo/Join.vo";
 export default function Join () {
     const defaultTheme = createTheme();
     const [member, setMember] = useState({} as JoinVO);
-
+    const handleChange = ( e: ChangeEvent<HTMLInputElement> ) => {
+        const { value, name } = e.target;
+        setMember({...member,[name]: value});
+    };
     const join = () => {
         if(!member.memId.trim()) {
             alert("아이디를 입력하세요.");
@@ -63,7 +66,7 @@ export default function Join () {
                         id="memId"
                         label="아이디"
                         name="memId"
-                        // onChange={setMember()}
+                        onChange={handleChange}
                         value={ member.memId || ""}
                         autoComplete="email"
                         autoFocus
@@ -76,7 +79,7 @@ export default function Join () {
                         label="비밀번호"
                         type="password"
                         id="password"
-                        // onChange={this.handleChange}
+                        onChange={handleChange}
                         value={ member.password || "" }
                         autoComplete="current-password"
                         />
@@ -88,7 +91,7 @@ export default function Join () {
                         label="이메일"
                         type="email"
                         id="email"
-                        // onChange={this.handleChange}
+                        onChange={handleChange}
                         value={ member.email || "" }
                         autoComplete="email"
                         />

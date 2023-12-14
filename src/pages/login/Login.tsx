@@ -11,11 +11,15 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { LoginIVO } from "./vo/login.vo";
+import { useDispatch } from "react-redux";
 import axios from "axios";
+import { loginUser } from "../../reducer/userSlice";
+import { useNavigate } from 'react-router-dom';
 
 export default function Login () {
+    const navigate = useNavigate();
     const defaultTheme = createTheme();
-
+    const dispatch = useDispatch();
     const [member, setMember] = useState({} as LoginIVO);
     const handleChange = ( e: ChangeEvent<HTMLInputElement> ) => {
         const { value, name } = e.target;
@@ -40,8 +44,10 @@ export default function Login () {
 
     const next = () => {
         // vue세션에 회원정보 저장
-        axios.get("/login/simple-details").then((r) => {
-            console.log(r)
+        axios.get("/login/simple-details").then((r: any) => {
+            console.log(r.data)
+            dispatch(loginUser(r.data));
+            navigate("/");
         });
     }    
 

@@ -1,10 +1,12 @@
-import { Box, Card, CardContent, CardMedia, Container, Grid, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, Card, CardContent, Container, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { MypageVO } from "./vo/mypage.vo";
+import { useSelector } from "react-redux";
 
 export default function Mypage() {
     const [member,setMember] = useState({} as MypageVO)
+    // const memNm = useSelector((state: any) => state);
     useEffect(()=>{
         axios.get("/mypage").then((r)=>{
             setMember(r.data);

@@ -10,12 +10,17 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearUser } from '../reducer/userSlice';
 
 export default function Header() {
+    const user = useSelector((state: any) => state.user);
+    const dispatch = useDispatch();
 
     const logout = async () => {
         const result = await axios.get("/logout");
         if(result) {
+            dispatch(clearUser(user));
             alert("로그아웃 성공")
         }
     }

@@ -9,7 +9,7 @@ export default function Ugcs() {
       axios.get("/board/ugcs").then((r)=>{
         setUgcs(r.data);
       })
-    })
+    },[])
     return(
         <List>
         {ugcs.map(( item, index) => (

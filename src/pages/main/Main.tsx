@@ -17,11 +17,12 @@ import { BoardMasterVO } from "../board/vo/board.vo";
 export default function Main() {
     const [board,setBoard] = useState([] as BoardMasterVO[]);
     const defaultTheme = createTheme;
+    
     useEffect(()=>{
-        axios.get("/board/ugcs").then((r: any)=>{
-            setBoard(r.data);
-        })     
-    })
+        axios.get("/login/simple-details").then((r) => {
+            console.log(r)
+        });     
+    },[])
 
     const hello = () => {
         axios.get("/board/ugcs").then((r: any)=>{

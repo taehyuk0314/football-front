@@ -6,7 +6,7 @@ export default function Mypage() {
         axios.get("/mypage").then((r)=>{
             console.log(r.data)
         })
-    })
+    },[])
     return(
         <>
         </>

@@ -7,6 +7,10 @@ import Ugcs from "../pages/board/Ugcs";
 import Ugc from "../pages/board/Ugc";
 import Mypage from "../pages/mypage/Mypage";
 
+const routeBefore = ()  => {
+  return 1;
+}
+
 const router = createBrowserRouter([
     {
         path:"/",

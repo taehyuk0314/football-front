@@ -23,12 +23,12 @@ export default function Login () {
     };
 
     const btnLogin = () => {
-        if(!member.id) {
+        if(!member.id.trim()) {
             alert("아이디를 입력하세요.");
             return;
         }
 
-        if(!member.password) {
+        if(!member.password.trim()) {
             alert("비밀번호를 입력하세요.");
             return;
         }
@@ -44,10 +44,6 @@ export default function Login () {
             console.log(r)
         });
     }    
-
-    useEffect(()=>{
-        next();
-    })
 
     return(
         <>

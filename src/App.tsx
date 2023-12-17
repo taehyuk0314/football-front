@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import './App.css';
-import { RouterProvider } from 'react-router-dom';
-import router from './router/Router';
 import axios from 'axios';
+import Router from './router/Router';
 
 export default function App() {
   useEffect(()=>{
@@ -19,6 +18,8 @@ export default function App() {
         switch (error.response.status) {
           case 401:
           case 403:
+            alert("로그인이 필요한 서비스 입니다.");
+            // navigate("/login");
             return Promise.reject(error);
           case 500:
             if (!error.response.data) {
@@ -34,12 +35,12 @@ export default function App() {
         return Promise.reject(error);
       }
     );
-  })
+  },[])
   
   return (
     <>
       <div className="App">
-        <RouterProvider router= {router} /> 
+        <Router/> 
       </div>        
     </>
   )

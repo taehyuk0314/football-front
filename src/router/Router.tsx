@@ -1,52 +1,47 @@
-import { createBrowserRouter } from "react-router-dom";
+import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
+import routes from "./Routes";
 import Login from "../pages/login/Login";
-import Main from "../pages/main/Main";
-import Join from "../pages/login/Join";
-import LayoutMain from "../layout/LayoutMain";
-import Ugcs from "../pages/board/Ugcs";
-import Ugc from "../pages/board/Ugc";
-import Mypage from "../pages/mypage/Mypage";
-import Products from "../pages/product/Products";
+import { useSelector } from "react-redux";
+export default function Router() {
+  const state = useSelector((state: any) => state);
+  const routeList = () => {
+    return routes.map((item: any)=> 
+      <Route 
+        path={item.path} 
+        element={
+          item.meta && item.meta.auth && !state.user.memNo?
+          <Login/>
+          :
+          item.element
+        }
+      >
+        {
+          item.children && getChildern(item.children)
+        }
+      </Route>
+    )
+  }
+  
+  const getChildern = (route: any) => {
+    return route.map((item: any)=>
+      <Route 
+        path={item.path} 
+        element={
+          item.meta && item.meta.auth && !state.user.memNo?
+          <Login/>
+          :
+          item.element
+        }
+      />
+    )
+  }
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      routeList()
+    )  
+  )
 
-const router = createBrowserRouter([
-    {
-        path:"/",
-        element: <LayoutMain />,
-        children: [
-            {
-              path: "/",
-              element: <Main />,
-            },
-            //** 커뮤니티 */
-            {
-              path: "/ugcs",
-              element: <Ugcs />,
-            },
-            {
-              path: "/ugc:boardNo",
-              element: <Ugc />,
-            },
-            {
-              path: "/mypage",
-              element: <Mypage />,
-            },
-            {
-              path: "/products",
-              element: <Products />,
-            },
-        ]
-    },
-    {
-        path:"/join",
-        element: <Join />
-    },
-    {
-        path:"/login",
-        element: <Login />
-    }
-]
-
-// 현재 위 상태로 돌리게 되면, root의 내용이 자식 주소에게도 보이게 됨.
-// 따라서, Root.tsx로 가서 <Outlet />을 적어줘야 함!
-)
-export default router;
+  return (
+    <RouterProvider router= {router} /> 
+  )
+}

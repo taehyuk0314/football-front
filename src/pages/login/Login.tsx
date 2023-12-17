@@ -45,7 +45,6 @@ export default function Login () {
     const next = () => {
         // vue세션에 회원정보 저장
         axios.get("/login/simple-details").then((r: any) => {
-            console.log(r.data)
             dispatch(loginUser(r.data));
             navigate("/");
         });

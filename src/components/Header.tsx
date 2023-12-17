@@ -12,6 +12,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearUser } from '../reducer/userSlice';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function Header() {
     const user = useSelector((state: any) => state.user);
@@ -64,7 +65,7 @@ export default function Header() {
                             // onClick={handleProfileMenuOpen}
                             color="inherit"
                             >
-                            <AccountCircle />
+                                <AccountCircle />
                             </IconButton>
                             <IconButton
                             size="large"
@@ -73,7 +74,7 @@ export default function Header() {
                             onClick={logout}
                             color="inherit"
                             >
-                                <AccountCircle />
+                                <LogoutIcon />
                             </IconButton>
                         </Box>
                         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

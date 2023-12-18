@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, Container, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, Container, CssBaseline, Stack, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { MypageVO } from "./vo/mypage.vo";
@@ -13,26 +13,32 @@ export default function Mypage() {
         })
     },[])
     return(
-        <Container maxWidth="md">
-            <Card sx={{ display: 'flex' }}>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                <CardContent sx={{ flex: '1 0 auto' }}>
-                <Typography component="div" variant="h5">
-                    {member.memNm} 
-                </Typography>
-                <Typography variant="subtitle1" color="text.secondary" component="div">
-                    Mac Miller
-                </Typography>
-                </CardContent>
-                <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
-                </Box>
-            </Box>
-            </Card>
-            <Card sx={{ display: 'flex' }}>
+        <>
+        <CssBaseline />
+            <Box
+            sx={{
+                bgcolor: 'background.paper',
+                pt: 8,
+                pb: 6,
+            }}
+            >
+            <Container maxWidth="sm">
+                <Card sx={{ display: 'flex' }}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-
-                </Box>    
-            </Card>        
-        </Container>
+                    <CardContent sx={{ flex: '1 0 auto' }}>
+                    <Typography component="div" variant="h5">
+                        {member.memNm} 
+                    </Typography>
+                    <Typography variant="subtitle1" color="text.secondary" component="div">
+                        Mac Miller
+                    </Typography>
+                    </CardContent>
+                    <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
+                    </Box>
+                </Box>
+                </Card>
+            </Container>
+        </Box>              
+        </>
     )
 }

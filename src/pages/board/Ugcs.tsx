@@ -4,12 +4,15 @@ import { BoardUgcVO } from "./vo/board.vo";
 import { Avatar, Container, List, ListItem, ListItemAvatar, ListItemText, SpeedDial, SpeedDialAction } from "@mui/material";
 import ShareIcon from '@mui/icons-material/Share';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import ModeIcon from '@mui/icons-material/Mode';
+import { useNavigate } from "react-router-dom";
 
 export default function Ugcs() {
     const [ugcs,setUgcs] = useState([] as BoardUgcVO[]);
-
+    const navigate = useNavigate();
     const actions = [
       { icon: <ShareIcon />, name: 'Share' },
+      { icon: <ModeIcon />, name: 'new', onclick: ()=>{navigate("/ugc/new")} },
     ];    
     useEffect(()=>{
       axios.get("/board/ugcs").then((r)=>{
@@ -38,6 +41,7 @@ export default function Ugcs() {
                 key={action.name}
                 icon={action.icon}
                 tooltipTitle={action.name}
+                onClick={action.onclick}
               />
             ))}
           </SpeedDial>

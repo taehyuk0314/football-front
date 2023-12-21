@@ -6,6 +6,8 @@ import Ugc from "../pages/board/Ugc";
 import Ugcs from "../pages/board/Ugcs";
 import Main from "../pages/main/Main";
 import LayoutMain from "../layout/LayoutMain";
+import Cart from "../pages/mypage/Cart";
+import UgcForm from "../pages/board/UgcForm";
 
  const routes = [
             {
@@ -31,9 +33,21 @@ import LayoutMain from "../layout/LayoutMain";
                         meta: { title:"" }
                     },
                     {
+                        id:"ugcForm",
+                        path: "/ugc/new",
+                        element: <UgcForm />,
+                        meta: { title:"게시글 쓰기", auth: true }
+                    },
+                    {
                         id:"mypage",
                         path: "/mypage",
                         element: <Mypage />,
+                        meta: { title:"",auth: true }
+                    },
+                    {
+                        id:"cart",
+                        path: "/cart",
+                        element: <Cart />,
                         meta: { title:"",auth: true }
                     },
                     {

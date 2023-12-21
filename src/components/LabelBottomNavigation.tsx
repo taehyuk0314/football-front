@@ -14,7 +14,7 @@ export default function LabelBottomNavigation () {
                 showLabels
                 >
                 <BottomNavigationAction component={Link} to="/products" icon={<DensityMediumIcon />} /> 
-                <BottomNavigationAction component={Link} to="/" icon={<FavoriteIcon />} />
+                <BottomNavigationAction component={Link} to="/cart" icon={<FavoriteIcon />} />
                 <BottomNavigationAction component={Link} to="/" icon={<HomeIcon />} /> 
                 <BottomNavigationAction component={Link} to="/ugcs" icon={<NotificationsRoundedIcon />} />
                 <BottomNavigationAction component={Link} to="/mypage" icon={<AccountBoxRoundedIcon />} />

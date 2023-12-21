@@ -1,6 +1,6 @@
-import { Box, Button, Card, CardContent, Container, CssBaseline, Stack, Typography } from "@mui/material";
+import { Box, Card, CardContent, Container, CssBaseline, Typography } from "@mui/material";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MypageVO } from "./vo/mypage.vo";
 import { useSelector } from "react-redux";
 

@@ -2,17 +2,19 @@ import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } 
 import routes from "./Routes";
 import Login from "../pages/login/Login";
 import { useSelector } from "react-redux";
+import Authmiddleware from "../pages/auth/Authmiddleware";
 export default function Router() {
   const state = useSelector((state: any) => state);
   const routeList = () => {
-    console.log(state)
     return routes.map((item: any)=> 
       <Route 
         path={item.path} 
         element={
-          item.meta && item.meta.auth && !state.user.memNo?
-          <Login/>
-          :
+          item.meta && item.meta.auth?
+          <Authmiddleware>
+            {item.element}  
+          </Authmiddleware>
+            :          
           item.element
         }
       >
@@ -28,9 +30,11 @@ export default function Router() {
       <Route 
         path={item.path} 
         element={
-          item.meta && item.meta.auth && !state.user.memNo?
-          <Login/>
-          :
+          item.meta && item.meta.auth?
+          <Authmiddleware>
+            {item.element}  
+          </Authmiddleware>
+            :          
           item.element
         }
       />

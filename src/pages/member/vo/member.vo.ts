@@ -43,3 +43,11 @@ export interface PasswordVO extends MemberPasswordVO {
     newPassword: string;
 }
 
+export interface LikeMasterVO {
+	likeNo:number;
+	likeTypeCd: string;
+	targetNo: number;
+    regUser: number;
+    regDt: string; 
+}
+

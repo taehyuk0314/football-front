@@ -2,11 +2,9 @@ import { Box, Card, CardContent, Container, CssBaseline, Typography } from "@mui
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { MypageVO } from "./vo/mypage.vo";
-import { useSelector } from "react-redux";
 
 export default function Mypage() {
     const [member,setMember] = useState({} as MypageVO)
-    // const memNm = useSelector((state: any) => state);
     useEffect(()=>{
         axios.get("/mypage").then((r)=>{
             setMember(r.data);
@@ -22,7 +20,7 @@ export default function Mypage() {
                 pb: 6,
             }}
             >
-            <Container maxWidth="sm">
+            <Container >
                 <Card sx={{ display: 'flex' }}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <CardContent sx={{ flex: '1 0 auto' }}>

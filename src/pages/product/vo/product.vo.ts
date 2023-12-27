@@ -1,7 +1,9 @@
+import { LikeMasterVO } from "../../member/vo/member.vo";
+
 export interface ProductVO extends ProductMasterVO{
 
 }
-export interface ProductMasterVO {
+export interface ProductMasterVO extends BrandMasterVO {
     productNo: number;
     productTypeCd: string;
     productNm: string ;
@@ -20,7 +22,7 @@ export interface ProductMasterVO {
     updDt: string;      
 }
 
-export interface BrandMasterVO {
+export interface BrandMasterVO extends LikeMasterVO {
     brandNo: number;
     brandTypeCd: string;
     brandNm: string;

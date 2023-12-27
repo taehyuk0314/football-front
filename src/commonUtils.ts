@@ -1,6 +1,5 @@
-import axios from 'axios';
+import numeral from 'numeral';
 
-export default function CommonUtils () {
-
-
+export function getNumber (number: number) {
+    return numeral(number).format("0,0");
 }

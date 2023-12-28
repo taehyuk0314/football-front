@@ -4,7 +4,6 @@ import HomeIcon from '@mui/icons-material/Home';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded';
 import DensityMediumIcon from '@mui/icons-material/DensityMedium';
-import React from "react";
 import { Link } from "react-router-dom";
 
 export default function LabelBottomNavigation () {

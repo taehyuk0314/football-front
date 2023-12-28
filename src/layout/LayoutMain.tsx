@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Outlet } from "react-router-dom";
 import LabelBottomNavigation from "../components/LabelBottomNavigation";
+import { MobileView } from "react-device-detect";
 
 export default function LayoutMain() {
     
@@ -11,7 +12,9 @@ export default function LayoutMain() {
             <Header/>
             <Outlet/>
             <Footer/>
-            <LabelBottomNavigation/>                  
+            <MobileView>
+                <LabelBottomNavigation/>                  
+            </MobileView>
         </>
     ) 
 }

@@ -1,7 +1,7 @@
 import { LikeMasterVO } from "../../member/vo/member.vo";
 
 export interface ProductVO extends ProductMasterVO{
-
+    isLiked: boolean;
 }
 export interface ProductMasterVO extends BrandMasterVO {
     productNo: number;

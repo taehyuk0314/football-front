@@ -13,7 +13,7 @@ axios.defaults.baseURL = process.env.REACT_APP_SERVER;
 axios.defaults.withCredentials = true;
 axios.defaults.paramsSerializer = (params) => {
   let result = '';
-  Object.keys(params).filter(key => params[key] || params[key] == false).forEach(key => {
+  Object.keys(params).filter(key => params[key] || params[key] === false).forEach(key => {
     result += `${key}=${encodeURIComponent(params[key])}&`;
   });
   return result.substring(0, result.length - 1);
@@ -27,9 +27,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <App/>
-    </PersistGate>
+      <PersistGate loading={null} persistor={persistor}>
+        <App/>
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );

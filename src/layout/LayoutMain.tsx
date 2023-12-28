@@ -5,6 +5,7 @@ import { Outlet } from "react-router-dom";
 import LabelBottomNavigation from "../components/LabelBottomNavigation";
 
 export default function LayoutMain() {
+    
     return(
         <>
             <Header/>

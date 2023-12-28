@@ -113,7 +113,7 @@ export default function Products() {
                                 { getNumber(item.totalPrice) }원
                                 </Typography>
                                 <Checkbox  
-                                    checked={item.likeNo != null} 
+                                    checked={item.isLiked} 
                                     icon={<FavoriteBorder />} 
                                     checkedIcon={<Favorite />} 
                                     onChange={productLike}

@@ -1,11 +1,14 @@
-import { Outlet, Route, RouterProvider, createBrowserRouter, createRoutesFromElements, useNavigate } from "react-router-dom";
-import routes from "./Routes";
-import Authmiddleware from "../pages/auth/Authmiddleware";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { clearUser } from "../reducer/userSlice";
 
 export default function Router() {
+  const member = useSelector((state: any) => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
   useEffect(()=>{
     axios.interceptors.request.use((config) => {
       return config;
@@ -21,6 +24,7 @@ export default function Router() {
           case 401:
           case 403:
             alert("로그인이 필요한 서비스 입니다.");
+            dispatch(clearUser(member));
             return navigate('login');
           case 500:
             if (!error.response.data) {

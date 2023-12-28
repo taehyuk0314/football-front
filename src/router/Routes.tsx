@@ -8,6 +8,7 @@ import Main from "../pages/main/Main";
 import LayoutMain from "../layout/LayoutMain";
 import Cart from "../pages/mypage/Cart";
 import UgcForm from "../pages/board/UgcForm";
+import Product from "../pages/product/Product";
 
  const routes = [
             {
@@ -54,6 +55,12 @@ import UgcForm from "../pages/board/UgcForm";
                         id:"products",
                         path: "/products",
                         element: <Products />,
+                        meta: {title:""}
+                    },
+                    {
+                        id:"product",
+                        path: "/product:productNo",
+                        element: <Product />,
                         meta: {title:""}
                     },
                 ]

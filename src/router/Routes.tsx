@@ -59,7 +59,7 @@ import Product from "../pages/product/Product";
                     },
                     {
                         id:"product",
-                        path: "/product:productNo",
+                        path: "/product/:productNo",
                         element: <Product />,
                         meta: {title:""}
                     },

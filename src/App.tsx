@@ -36,8 +36,9 @@ export default function App() {
   }
   
   const getChildren = (route: any) => {
-    return route.map((item: any)=>
+    return route.map((item: any,key: number)=>
       <Route 
+        key={key}
         path={item.path} 
         element={
           item.meta && item.meta.auth?

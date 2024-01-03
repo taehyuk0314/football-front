@@ -1,7 +1,7 @@
 import { LikeMasterVO } from "../../member/vo/member.vo";
 
-export interface ProductVO extends ProductMasterVO{
-    isLiked: boolean;
+export interface ProductVO extends ProductOptionVO {
+    options: Array<ProductOptionVO>;
 }
 export interface ProductMasterVO extends BrandMasterVO {
     productNo: number;
@@ -19,7 +19,9 @@ export interface ProductMasterVO extends BrandMasterVO {
     regUser: number;
     regDt: string;
     updUser: number;
-    updDt: string;      
+    updDt: string;   
+    
+    likeCnt: number;
 }
 
 export interface BrandMasterVO extends LikeMasterVO {
@@ -32,4 +34,20 @@ export interface BrandMasterVO extends LikeMasterVO {
     regDt: string;
     updUser: number;
     updDt: string; 
+}
+
+export interface ProductOptionVO extends ProductMasterVO {
+    optionNo: number;
+    optionNm: string;
+    optionCnt: number;
+    viewType: string;
+    regUser: number;
+    regDt: string;
+    updUser: number;
+    updDt: string;
+    productNo: number;
+}
+export interface OrderMasterVO extends ProductVO {
+    orderNo: number;
+    orderCnt: number;
 }

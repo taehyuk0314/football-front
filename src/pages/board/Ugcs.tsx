@@ -36,9 +36,9 @@ export default function Ugcs() {
             sx={{ position: 'absolute', bottom: 100, right: 16 }}
             icon={<SpeedDialIcon />}
           >
-            {actions.map((action) => (
+            {actions.map((action,index) => (
               <SpeedDialAction
-                key={action.name}
+                key={index}
                 icon={action.icon}
                 tooltipTitle={action.name}
                 onClick={action.onclick}

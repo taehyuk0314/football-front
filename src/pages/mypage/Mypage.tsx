@@ -6,12 +6,13 @@ import { MypageVO } from "./vo/mypage.vo";
 export default function Mypage() {
     const [member,setMember] = useState({} as MypageVO)
     useEffect(()=>{
+        console.log("dddd")
         axios.get("/mypage").then((r)=>{
             if(r && r.data) {
                 setMember(r.data);
             }
         })
-    },[member])
+    },[])
     return(
         <>
             <Grid sx={{ display:'flex', bgcolor: 'black', px: 5, py: 10 }}>

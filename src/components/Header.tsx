@@ -50,7 +50,7 @@ export default function Header() {
                             </Typography>
                         </Toolbar>
                         <Grid container spacing={3} sx={{ height:'60px', alignItems: 'center', justifyContent: 'space-between'}} >
-                            <Grid md={6}>
+                            <Grid item md={6}>
                                 <Typography
                                     variant="h6"
                                     noWrap
@@ -61,7 +61,7 @@ export default function Header() {
                                     센터
                                 </Typography>
                             </Grid>
-                            <Grid md={6} sx={{ display: 'flex', flexDirection: 'row-reverse'}}>
+                            <Grid item md={6} sx={{ display: 'flex', flexDirection: 'row-reverse'}}>
                                 <IconButton
                                     size="large"
                                     aria-label="show 17 new cart"
@@ -84,9 +84,9 @@ export default function Header() {
                         </Grid>
                         <AppBar position="static" color='transparent'>
                             <Grid container spacing={3} sx={{ height:'70px', width:1, alignItems: 'center', justifyContent: 'space-between'}}>
-                                <Grid md={2}>
+                                <Grid item md={2}>
                                 </Grid>
-                                <Grid md={8} sx={{ display:'flex', justifyContent: 'center', alignItems: 'center',cursor: 'pointer'}}>
+                                <Grid item md={8} sx={{ display:'flex', justifyContent: 'center', alignItems: 'center',cursor: 'pointer'}}>
                                     <Typography
                                         variant="h6"
                                         noWrap
@@ -107,7 +107,7 @@ export default function Header() {
                                         커뮤니티
                                     </Typography>
                                 </Grid>
-                                <Grid md={2}>
+                                <Grid item md={2}>
                                 </Grid>
                             </Grid>
                         </AppBar>                        

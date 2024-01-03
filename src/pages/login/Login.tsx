@@ -37,7 +37,6 @@ export default function Login () {
             return;
         }
         axios.post("/login", member).then(() => {
-            alert("로그인 성공!")
             next();
         })
     }; 

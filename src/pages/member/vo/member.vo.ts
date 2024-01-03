@@ -49,5 +49,7 @@ export interface LikeMasterVO {
 	targetNo: number;
     regUser: number;
     regDt: string; 
+
+    isLiked: boolean;
 }
 

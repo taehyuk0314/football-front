@@ -18,8 +18,6 @@ export default function Router() {
         return response;
       },
       (error) => {
-        console.log(error.response);
-
         switch (error.response.status) {
           case 401:
           case 403:

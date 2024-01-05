@@ -1,47 +1,57 @@
 import { Box, Button, Card, CardContent, CardMedia, Checkbox, Container, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { OrderMasterVO, ProductOptionVO, ProductVO } from "./vo/product.vo";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { getNumber } from "../../commonUtils";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import { IconButton } from '@mui/material';
+import { OrderMasterVO } from "../order/vo/order.vo";
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 
 export default function Product() {
     const params = useParams();
     const navigation = useNavigate();
-    const [product,setProduct] = useState({} as ProductVO);
-    const [options,setOptions] = useState([] as ProductOptionVO[]);
+    const [product,setProduct] = useState({} as OrderMasterVO);
     const [orders,setOrders] = useState([] as OrderMasterVO[]);
 
-    const [option,setOption] = useState({} as ProductOptionVO);
+    const _ = require('lodash');
 
-
-    const handleChange = (event: SelectChangeEvent ) => {
+    const handleChange = (event: SelectChangeEvent) => {
         const {target: { value }} = event;
-
+        
         const order = JSON.parse(value) as OrderMasterVO;
         if(order.optionCnt < 1) {
             alert("품절된 상품입니다.");
             return;
         }
-        setOrders({...orders, [orders.length-1]: order});
+
+        if(orders.findIndex(item => item.optionNo === order.optionNo) > -1) {
+            alert("이미 선택되어있는 상품입니다.")
+            return;
+        }
+        const merge = {..._.omitBy(product, _.isNull), ..._.omitBy(order, _.isNull),orderCnt:1}
+        setOrders([...orders,merge]);
     }
 
     const btnCart = () => {
-        console.log(orders)
         if(!orders.length) {
             alert("구매하실 상품을 선택해주세요.")
             return;
         }
         orders.forEach((item)=>{
-            if(item.orderCnt < 0) {
+            if(item.orderCnt < 1) {
                 alert("상품 개수는 1개이상 입니다.")
                 return;
             }
         })
-        setOrders([]);
+        axios.post("/mypage/cart",orders).then(()=>{
+            alert("장바구니 담기 성공");
+            setOrders([]);
+        })
+        
     } 
 
     const btnLiked = () =>{
@@ -58,6 +68,24 @@ export default function Product() {
           return;
         });        
     }
+
+    const btnProductCounting = (param: OrderMasterVO, count: number) => {
+        let findOrder = orders.findIndex(item => item.optionNo === param.optionNo);
+        
+        let copiedItems = [...orders];
+        if(copiedItems[findOrder].orderCnt + count < 1) {
+            alert("1개 이상 구매 가능합니다.")
+            return;
+        }
+        if(copiedItems[findOrder].optionCnt < copiedItems[findOrder].orderCnt + count) {
+            alert(copiedItems[findOrder].optionCnt+"이하로 구매 가능합니다.")
+            return;
+        }
+
+        copiedItems[findOrder].orderCnt = copiedItems[findOrder].orderCnt+ count;
+        setOrders(copiedItems);
+    }
+
     useEffect(()=>{
         if(!params.productNo) {
             navigation(-1);
@@ -71,10 +99,10 @@ export default function Product() {
         <Container maxWidth="lg" sx={{ py: 5, height: '100%'}}>
             <Card sx={{ display: 'flex'}}>
                 <CardMedia
-                component="div"
-                sx={{ width: '40%', pt: '50%' }}
-                image="https://source.unsplash.com/random?wallpapers"
-            />
+                    component="div"
+                    sx={{ width: '40%', pt: '50%' }}
+                    image="https://source.unsplash.com/random?wallpapers"
+                />
                 <Box sx={{ width: '60%',px: 10, py: 5,   display: 'flex', flexDirection: 'column' }}>
                     <CardContent sx={{ flex: '1' }}>
                         <Typography variant="subtitle1" color="text.secondary" component="div">
@@ -91,9 +119,9 @@ export default function Product() {
                                 <InputLabel id="option-select-label">선택</InputLabel>
                                 <Select
                                     labelId="option-select-label"
-                                    id="demo-simple-select"
-                                    value={option.optionNm}
+                                    id="option-select"
                                     label="선택"
+                                    value={''}
                                     onChange={handleChange}
                                 >
                                     {
@@ -118,13 +146,22 @@ export default function Product() {
                             </FormControl>
                                 {
                                     orders.length?
-                                    <div>
+                                    <Box>
                                         {
-                                            orders.map((item)=>{
-                                              return <></>  
+                                            orders.map((item: OrderMasterVO,index)=>{
+                                                return  <Box key={index} display={"flex"} sx={{ pt:3, justifyContent: "space-between"}}>
+                                                            <Typography variant="h5" component="div">
+                                                                {item.productNm + "["+ item.optionNm+"]"}
+                                                            </Typography>
+                                                            <Box>
+                                                                <IconButton onClick={()=>{btnProductCounting(item,1)}}><AddIcon/></IconButton>
+                                                                {item.orderCnt}
+                                                                <IconButton onClick={()=>{btnProductCounting(item,-1)}}><RemoveIcon/></IconButton>
+                                                            </Box>
+                                                        </Box>  
                                             })
                                         }
-                                    </div>
+                                    </Box>
                                     :
                                     null
                                 }

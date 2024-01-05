@@ -35,13 +35,13 @@ export default function Header() {
                             <Typography sx={{ fontSize:13, height:'35px',cursor: 'pointer' }} component="div">
                                 {
                                     member.memNo?
-                                    <Typography sx={{ fontSize:13, display:'flex', alignItems: 'center'}}>
+                                    <Typography component="div" sx={{ fontSize:13, display:'flex', alignItems: 'center'}}>
                                         <div onClick={()=>navigate("/mypage")}>마이페이지</div>
                                         <div className='css-bulkhead'></div>
                                         <div onClick={logout}>로그아웃</div>
                                     </Typography>                                    
                                     :
-                                    <Typography sx={{ fontSize:13, display:'flex', alignItems: 'center'}}>
+                                    <Typography component="div" sx={{ fontSize:13, display:'flex', alignItems: 'center'}}>
                                         <div onClick={()=>navigate("/login")}>로그인</div>
                                         <div className='css-bulkhead'></div>
                                         <div onClick={()=>navigate("/join")}>회원가입</div>

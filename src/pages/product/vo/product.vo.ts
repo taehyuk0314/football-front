@@ -47,7 +47,3 @@ export interface ProductOptionVO extends ProductMasterVO {
     updDt: string;
     productNo: number;
 }
-export interface OrderMasterVO extends ProductVO {
-    orderNo: number;
-    orderCnt: number;
-}

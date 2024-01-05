@@ -66,7 +66,7 @@ export default function Header() {
                                     size="large"
                                     aria-label="show 17 new cart"
                                     color="inherit"
-                                    onClick={()=>{navigate("/cart")}}
+                                    onClick={()=>{navigate("/cart/liked")}}
                                 >
                                     <FavoriteIcon />
                                 </IconButton>                                    
@@ -74,7 +74,7 @@ export default function Header() {
                                     size="large"
                                     aria-label="show 17 new cart"
                                     color="inherit"
-                                    onClick={()=>{navigate("/cart")}}
+                                    onClick={()=>{navigate("/cart/cart")}}
                                 >
                                     <Badge badgeContent={0} color="error">
                                         <ShoppingCartIcon />
@@ -121,7 +121,7 @@ export default function Header() {
                                     size="large"
                                     aria-label="show 17 new cart"
                                     color="inherit"
-                                    onClick={()=>{navigate("/cart")}}
+                                    onClick={()=>{navigate("/cart/cart")}}
                                 >
                                     <Badge badgeContent={0} color="error">
                                         <ShoppingCartIcon />

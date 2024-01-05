@@ -6,21 +6,26 @@ import TabPanel from '@mui/lab/TabPanel';
 import React, { useEffect, useState } from "react";
 import { ProductVO } from '../product/vo/product.vo';
 import axios from 'axios';
+import CartList from './CartList';
+import { useParams } from 'react-router-dom';
 
 export default function Cart() {
-    const [tabValue, setTabValue] = useState("cart") ;
+    const params = useParams();
+    const [cartType, setCartType] = useState(params?String(params.cartType):"cart") ;
     const [products, setProducts] = useState([] as ProductVO[]);
+    
     const handleChange = (item: React.SyntheticEvent,value: any) =>{
-        return setTabValue(value); 
+        return setCartType(value); 
     }
+
     useEffect(()=>{
-        axios.get("/mypage/cart",{ params:{ tab: tabValue }}).then((r)=>{
+        axios.get("/mypage/cart",{ params:{ cartType: cartType }}).then((r)=>{
             setProducts(r.data);
         })
     },[])
     return(
         <>
-            <TabContext value={tabValue}>
+            <TabContext value={cartType}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
                     <TabList onChange={handleChange} variant="fullWidth">
                         <Tab label="장바구니" value="cart" />
@@ -29,7 +34,7 @@ export default function Cart() {
                     </TabList>
                 </Box>
                 <TabPanel value="cart">
-                    Item One
+                    <CartList products={products} />
                 </TabPanel>
                 <TabPanel value="hart">Item Two</TabPanel>
                 <TabPanel value="recently">Item Three</TabPanel>

@@ -29,7 +29,7 @@ import Product from "../pages/product/Product";
                     },
                     {
                         id:"ugc",
-                        path: "/ugc:boardNo",
+                        path: "/ugc/:boardNo",
                         element: <Ugc />,
                         meta: { title:"" }
                     },
@@ -47,7 +47,7 @@ import Product from "../pages/product/Product";
                     },
                     {
                         id:"cart",
-                        path: "/cart",
+                        path: "/cart/:cartType",
                         element: <Cart />,
                         meta: { title:"",auth: true }
                     },

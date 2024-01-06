@@ -2,13 +2,15 @@ import { Box, Button, Card, CardContent, CardMedia, Checkbox, Container, FormCon
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { getNumber } from "../../commonUtils";
+import { getLocalStorageObject, getNumber, putLocalStorageObject } from "../../commonUtils";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { IconButton } from '@mui/material';
 import { OrderMasterVO } from "../order/vo/order.vo";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import Constants from "../../constants";
+import { CartMasterVO } from "../mypage/vo/mypage.vo";
 
 
 export default function Product() {
@@ -53,7 +55,7 @@ export default function Product() {
         })
         
     } 
-
+    
     const btnLiked = () =>{
         const params = { likeTypeCd: "003002", targetNo : product.productNo };
         if (!product.isLiked) {
@@ -68,7 +70,31 @@ export default function Product() {
           return;
         });        
     }
+   // 최근 본 상품에 추가
+   const addRecentProduct = () => {
+        let recentProducts = getLocalStorageObject(Constants.RECENT_PRODUCTS);
+        if (!recentProducts) {
+            recentProducts = new Array<number>();
+        }
 
+        recentProducts.unshift(params.productNo);
+        recentProducts = Array.from(new Set(recentProducts));
+
+        if (recentProducts.length > 20) {
+        recentProducts = recentProducts.slice(undefined, 20);
+        }
+
+        putLocalStorageObject(Constants.RECENT_PRODUCTS, recentProducts);
+
+        addRecentProductInfo();
+    }  
+
+    const addRecentProductInfo = () => {
+        let recentProductInfo = getLocalStorageObject(Constants.RECENT_PRODUCTS_INFO) as Array<CartMasterVO>;
+        if (!recentProductInfo) {
+          recentProductInfo = new Array<CartMasterVO>();
+        }
+    }    
     const btnProductCounting = (param: OrderMasterVO, count: number) => {
         let findOrder = orders.findIndex(item => item.optionNo === param.optionNo);
         
@@ -92,6 +118,7 @@ export default function Product() {
         }
         axios.get(`/product/${params.productNo}`).then((r)=>{
             setProduct(r.data);
+            addRecentProduct();
         })
     },[navigation, params.productNo])
 

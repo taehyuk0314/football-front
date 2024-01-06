@@ -19,6 +19,7 @@ export default function CartList(props: any) {
             
         })
     }
+    
     useEffect(()=>{
         setCarts(props.products)
     },[props])

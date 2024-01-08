@@ -9,6 +9,7 @@ import axios from 'axios';
 import CartList from './CartList';
 import { useParams } from 'react-router-dom';
 import LikeList from './LikeList';
+import RecentProducts from './RecentProducts';
 
 export default function Cart() {
     const params = useParams();
@@ -21,7 +22,9 @@ export default function Cart() {
     const onChangeCart = (item: string) =>{
         axios.get("/mypage/cart",{ params:{ cartType: item }}).then((r)=>{
             setCartType(item);
-            setProducts(r.data);
+            if(r && r.data) {
+                setProducts(r.data);
+            }
         }) 
     }
     useEffect(()=>{
@@ -43,7 +46,9 @@ export default function Cart() {
                 <TabPanel value="liked">
                     <LikeList products={products} />
                 </TabPanel>
-                <TabPanel value="recently">Item Three</TabPanel>
+                <TabPanel value="recently">
+                    <RecentProducts/>
+                </TabPanel>
             </TabContext>      
         </>
     )

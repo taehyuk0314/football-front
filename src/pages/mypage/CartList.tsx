@@ -3,10 +3,11 @@ import { CartMasterVO } from "./vo/mypage.vo";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function CartList(props: any) {
     const [carts,setCarts] = useState([] as CartMasterVO[]);
-
+    const navigate = useNavigate();
     const btnDeleteCart = (product:CartMasterVO) =>{
         const params = product;
         axios.delete("/mypage/cart",{ params }).then(()=>{
@@ -40,10 +41,15 @@ export default function CartList(props: any) {
                                   </IconButton>
                                 }
                           >
-                              <ListItemAvatar>
-                                  <Avatar alt="Profile Picture"/>
-                              </ListItemAvatar>
-                              <ListItemText primary={item.productNm+"["+item.optionNm+"]"} secondary={item.optionCnt?"남은재고: "+item.optionCnt:""} />
+                            <ListItemAvatar>
+                                <Avatar alt="Profile Picture"/>
+                            </ListItemAvatar>
+                            <ListItemText 
+                                sx={{ cursor:"pointer"}} 
+                                onClick={()=>navigate("/product/"+item.productNo)} 
+                                primary={item.productNm+"["+item.optionNm+"]"} 
+                                secondary={item.optionCnt?"남은재고: "+item.optionCnt:""} 
+                            />
                           </ListItem>
                 })
             } 

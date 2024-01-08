@@ -11,7 +11,7 @@ export default function LikeList(props: any) {
 
   const btnLiked = (item: CartMasterVO) =>{
       const params = { likeTypeCd: "003002", targetNo : item.productNo };
-      let findLiked = likes.findIndex(item => item.likeNo === item.likeNo);
+      let findLiked = likes.findIndex(liked => liked.likeNo === item.likeNo);
       let copiedItems = [...likes];            
       if (!item.isLiked) {
         axios.post(`/product/like`, params).then(() => {

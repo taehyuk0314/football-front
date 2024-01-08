@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Card, CardActions, CardContent, CardMedia, Checkbox, Container, FormControlLabel, Grid, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Card, CardActions, CardContent, CardMedia, Checkbox, Container, FormControl, FormControlLabel, Grid, IconButton, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { ProductVO } from "./vo/product.vo";
 import axios from "axios";
@@ -17,7 +17,7 @@ export default function Products() {
     const [selectedValue, setSelectedValue] = useState("");
     const [codes, setCodes] =useState([] as CodeMasterVO[])
     const [products,setProducts] = useState([] as ProductVO[]);
-    const [ productTypeCd, setProductTypeCd ] = useState([]);
+    const [productTypeCd, setProductTypeCd] = useState([]);
     const codeType = '004';
     const navigate = useNavigate();
 
@@ -43,6 +43,26 @@ export default function Products() {
         setOpen(false);
     }
 
+    const btnLiked = (item: ProductVO) =>{
+        const params = { likeTypeCd: "003002", targetNo : item.productNo };
+        let findLiked = products.findIndex(product => product.productNo === item.productNo);
+        let copiedItems = [...products];            
+        if (!item.isLiked) {
+          axios.post(`/product/like`, params).then(() => {
+        
+            copiedItems[findLiked].isLiked = true;
+            setProducts(copiedItems);
+            return;
+          });
+          return;
+        }
+        axios.delete(`/product/like`, { params }).then(() => {
+            copiedItems[findLiked].isLiked = false;
+            setProducts(copiedItems);            
+          return;
+        });        
+    }
+
     useEffect(()=>{
         axios.get(`/code/groups/${codeType}`).then((r)=>{
             setCodes(r.data);
@@ -66,7 +86,7 @@ export default function Products() {
                                             <Typography>{item.codeNm}</Typography>
                                         </AccordionSummary>
                                         <AccordionDetails>
-                                            <Typography>
+                                            <FormControl>
                                                 <FormControlLabel
                                                     label="전체"
                                                     control={
@@ -79,13 +99,17 @@ export default function Products() {
                                                     {
                                                         item.codes.map((category)=>{
                                                             return <FormControlLabel
-                                                                label={category.codeNm}
-                                                                control={<Checkbox />}
-                                                            />
+                                                                key={category.code}
+                                                                label={category.codeNm} 
+                                                                control={
+                                                                    <Checkbox
+                                                                        onChange={handleChange1}
+                                                                    />
+                                                                }                                                                    />
                                                         })
                                                     }
                                                 </Box>
-                                            </Typography>
+                                            </FormControl>
                                         </AccordionDetails>
                                     </Accordion>: null
                         })
@@ -131,12 +155,13 @@ export default function Products() {
                                 <Typography onClick={()=>navigate("/product/"+item.productNo)} gutterBottom variant="h6" component="h2">
                                 { getNumber(item.totalPrice) }원
                                 </Typography>
-                                <Checkbox  
-                                    checked={item.isLiked} 
-                                    icon={<FavoriteBorder />} 
-                                    checkedIcon={<Favorite />} 
-                                    onChange={productLike}
-                                />
+                                <IconButton onClick={()=>{btnLiked(item)}} aria-label="delete">
+                                {
+                                    item.isLiked?   
+                                    <Favorite color="error"/>
+                                    :<FavoriteBorder/>
+                                }
+                                </IconButton>
                             </CardActions>                            
                         </Card>
                     </Grid>

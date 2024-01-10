@@ -10,6 +10,7 @@ import CartList from './CartList';
 import { useParams } from 'react-router-dom';
 import LikeList from './LikeList';
 import RecentProducts from './RecentProducts';
+import { Container } from '@mui/material';
 
 export default function Cart() {
     const params = useParams();
@@ -31,7 +32,7 @@ export default function Cart() {
         onChangeCart(cartType);
     },[cartType])
     return(
-        <>
+        <Container maxWidth="md">
             <TabContext value={cartType}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
                     <TabList onChange={handleChange} variant="fullWidth">
@@ -50,6 +51,6 @@ export default function Cart() {
                     <RecentProducts/>
                 </TabPanel>
             </TabContext>      
-        </>
+        </Container>
     )
 }

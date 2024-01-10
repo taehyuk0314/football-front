@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import List from '@mui/material/List';
@@ -9,27 +8,33 @@ import ListItemText from '@mui/material/ListItemText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import PersonIcon from '@mui/icons-material/Person';
-import AddIcon from '@mui/icons-material/Add';
 import { blue } from '@mui/material/colors';
+import { useEffect, useState } from 'react';
+import { CartMasterVO } from '../pages/mypage/vo/mypage.vo';
 
 const emails = ['username@gmail.com', 'user02@gmail.com'];
 
 export interface SimpleDialogProps {
   open: boolean;
-  selectedValue: string;
-  onClose: (value: string) => void;
+  productNo: number;
+  onClose: () => void;
 }
 
-export default function SimpleDialog(props: SimpleDialogProps) {
-  const { onClose, selectedValue, open } = props;
+export default function ProductOptionDialog(props: SimpleDialogProps) {
+  const { onClose, productNo, open } = props;
+  const [ options, setOptions ] = useState([] as CartMasterVO[]);
 
   const handleClose = () => {
-    onClose(selectedValue);
+    onClose();
   };
 
   const handleListItemClick = (value: string) => {
-    onClose(value);
+    onClose();
   };
+
+  useEffect(()=>{
+    console.log("dd")
+  },[])
 
   return (
     <Dialog onClose={handleClose} open={open}>

@@ -1,3 +1,4 @@
+import { List } from "lodash";
 
 export interface BoardMasterVO {
     boardNo: number;
@@ -12,6 +13,13 @@ export interface BoardMasterVO {
 
 export interface BoardUgcVO extends BoardMasterVO {
     boardNo: number;
+    ugcTypeCd: string;
     useReply: boolean;
     useNickname: boolean;
+}
+
+export interface UgcVO extends BoardUgcVO {
+    ugcs: List<BoardMasterVO>;
+    bestUgcs: List<BoardMasterVO>;
+    recommendUgcs: List<BoardMasterVO>;
 }

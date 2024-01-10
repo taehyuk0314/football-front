@@ -37,7 +37,15 @@ export default function Product() {
         const merge = {..._.omitBy(product, _.isNull), ..._.omitBy(order, _.isNull),orderCnt:1}
         setOrders([...orders,merge]);
     }
-
+    const btnOrder = () =>{
+        if(orders.length < 1) {
+            alert("옵션을 선택해주세요");
+            return;
+        }
+        axios.post("/order",orders).then((r)=>{
+            navigation("/order/"+r.data.orderNo);
+        })
+    }
     const btnCart = () => {
         if(!orders.length) {
             alert("구매하실 상품을 선택해주세요.")
@@ -194,7 +202,12 @@ export default function Product() {
                                 }
                             <Grid container spacing={2}>
                                 <Grid item xs={8}>
-                                    <Button sx={{mt: 5,  height:100, width:'100%' }} variant="contained" color="success">
+                                    <Button 
+                                        sx={{mt: 5,  height:100, width:'100%' }} 
+                                        variant="contained" 
+                                        color="success"
+                                        onClick={btnOrder}
+                                    >
                                         구매하기
                                     </Button>                                    
                                 </Grid>

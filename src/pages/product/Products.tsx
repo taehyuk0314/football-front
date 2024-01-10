@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Card, CardActions, CardContent, CardMedia, Checkbox, Container, FormControl, FormControlLabel, Grid, IconButton, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Card, CardActions, CardMedia, Checkbox, FormControl, FormControlLabel, Grid, IconButton, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { ProductVO } from "./vo/product.vo";
 import axios from "axios";
@@ -8,13 +8,13 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { getNumber } from "../../commonUtils";
-import SimpleDialog from "../../components/SimpleDialog";
 import { useNavigate } from "react-router-dom";
+import ProductOptionDialog from "../../components/ProductOptionDialog";
 
 
 export default function Products() {
     const [open, setOpen] = useState(false);
-    const [selectedValue, setSelectedValue] = useState("");
+    const [productNo, setProductNo] = useState(0);
     const [codes, setCodes] =useState([] as CodeMasterVO[])
     const [products,setProducts] = useState([] as ProductVO[]);
     const [productTypeCd, setProductTypeCd] = useState([]);
@@ -25,10 +25,6 @@ export default function Products() {
         axios.get('/products',{params:{}}).then((r)=>{
             setProducts(r.data);
         })
-    }
-    
-    const productLike = (event: React.ChangeEvent<HTMLInputElement>) =>{
-        console.log(event)
     }
 
     const handleChange1 = (event: React.ChangeEvent<HTMLInputElement>) =>{
@@ -168,8 +164,8 @@ export default function Products() {
                     ))}
                 </Grid>
             </Grid>   
-            <SimpleDialog
-                selectedValue={selectedValue}
+            <ProductOptionDialog
+                productNo={productNo}
                 open={open}
                 onClose={handleClose}
             />                 

@@ -32,7 +32,7 @@ export default function Cart() {
         onChangeCart(cartType);
     },[cartType])
     return(
-        <Container maxWidth="md">
+        <Container maxWidth="lg">
             <TabContext value={cartType}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
                     <TabList onChange={handleChange} variant="fullWidth">

@@ -1,6 +1,7 @@
 import { List } from "lodash";
+import { LikeMasterVO } from "../../member/vo/member.vo";
 
-export interface BoardMasterVO {
+export interface BoardMasterVO extends LikeMasterVO {
     boardNo: number;
     boardTypeCd: string;
     title: string;

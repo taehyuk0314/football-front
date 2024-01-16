@@ -31,7 +31,6 @@ export default function Ugcs() {
       let copiedItems = [...ugcs];            
       if (!item.isLiked) {
         axios.post(`/board/like`, params).then(() => {
-      
           copiedItems[findLiked].isLiked = true;
           setUgcs(copiedItems);
           return;
@@ -39,8 +38,8 @@ export default function Ugcs() {
         return;
       }
       axios.delete(`/board/like`, { params }).then(() => {
-          copiedItems[findLiked].isLiked = false;
-          setUgcs(copiedItems);            
+        copiedItems[findLiked].isLiked = false;
+        setUgcs(copiedItems);       
         return;
       });        
   }
@@ -131,7 +130,7 @@ export default function Ugcs() {
                                 </Typography>
                               </CardContent>
                               <CardContent sx={{ width:'10%', display:'flex' }}>
-                                <IconButton onClick={()=>{btnLiked(item)}} aria-label="delete">
+                                <IconButton onClick={(event)=>{event.stopPropagation(); btnLiked(item)}} aria-label="delete">
                                   {
                                       item.isLiked?   
                                       <Favorite color="error"/>

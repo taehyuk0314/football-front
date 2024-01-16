@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Card, CardActions, CardMedia, Checkbox, FormControl, FormControlLabel, Grid, IconButton, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Card, CardActionArea, CardActions, CardMedia, Checkbox, FormControl, FormControlLabel, Grid, IconButton, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { ProductVO } from "./vo/product.vo";
 import axios from "axios";
@@ -18,6 +18,7 @@ export default function Products() {
     const [codes, setCodes] =useState([] as CodeMasterVO[])
     const [products,setProducts] = useState([] as ProductVO[]);
     const [productTypeCd, setProductTypeCd] = useState([]);
+    
     const codeType = '004';
     const navigate = useNavigate();
 
@@ -114,10 +115,10 @@ export default function Products() {
                 <Grid item xs={9} container spacing={4}>
                     {products.map((item) => (
                     <Grid item key={item.productNo} xs={12} sm={6} md={4}>
-                        <Card
-                            sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                        >
-                            <div onClick={()=>navigate("/product/"+item.productNo)}>
+                        <CardActionArea onClick={()=>{navigate("/product/"+item.productNo)}}>
+                            <Card
+                                sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                            >
                                 <CardMedia
                                     component="div"
                                     sx={{
@@ -131,14 +132,18 @@ export default function Products() {
                                     { item.productNm }
                                     </Typography>
                                 </CardActions>
-                            </div>
-                            <CardActions>
-                                <Button onClick={handleClickOpen} sx={{ width: '100%'}} variant="outlined" color="inherit" startIcon={<ShoppingCartIcon />}>
-                                    담기
-                                </Button>                                
-                            </CardActions>
-                            <div onClick={()=>navigate("/product/"+item.productNo)}>
-                                <CardActions sx={{ textAlign: 'left', py: 0}}>
+                                <CardActions>
+                                    <Button 
+                                        onClick={(event)=>{event.stopPropagation(); handleClickOpen()}} 
+                                        sx={{ width: '100%'}} 
+                                        variant="outlined" 
+                                        color="inherit" 
+                                        startIcon={<ShoppingCartIcon />}
+                                    >
+                                        담기
+                                    </Button>                                
+                                </CardActions>
+                                <CardActions sx={{ height:25, textAlign: 'left', py: 0}}>
                                     {
                                         item.salePrice?
                                         <Typography gutterBottom sx={{color: 'rgb(181, 181, 181)', textDecoration: 'line-through'}}>
@@ -146,20 +151,20 @@ export default function Products() {
                                         </Typography>: null
                                     }
                                 </CardActions>
-                            </div>
-                            <CardActions sx={{ flexGrow: 1, py: 0, height:40,  textAlign: 'left', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                                <Typography onClick={()=>navigate("/product/"+item.productNo)} gutterBottom variant="h6" component="h2">
-                                { getNumber(item.totalPrice) }원
-                                </Typography>
-                                <IconButton onClick={()=>{btnLiked(item)}} aria-label="delete">
-                                {
-                                    item.isLiked?   
-                                    <Favorite color="error"/>
-                                    :<FavoriteBorder/>
-                                }
-                                </IconButton>
-                            </CardActions>                            
-                        </Card>
+                                <CardActions sx={{ flexGrow: 1, pb:3,  textAlign: 'left', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                                    <Typography gutterBottom variant="h6" component="h2">
+                                    { getNumber(item.totalPrice) }원
+                                    </Typography>
+                                    <IconButton onClick={(event)=>{event.stopPropagation(); btnLiked(item)}} aria-label="delete">
+                                    {
+                                        item.isLiked?   
+                                        <Favorite color="error"/>
+                                        :<FavoriteBorder/>
+                                    }
+                                    </IconButton>
+                                </CardActions>                            
+                            </Card>
+                        </CardActionArea> 
                     </Grid>
                     ))}
                 </Grid>

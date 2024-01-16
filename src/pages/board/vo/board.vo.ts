@@ -6,6 +6,8 @@ export interface BoardMasterVO extends LikeMasterVO {
     boardTypeCd: string;
     title: string;
     contents: string;
+    likeCnt: number;
+    viewCnt: number;
     regUser: number;
     regDt: string;
     updUser: number;
@@ -17,6 +19,20 @@ export interface BoardUgcVO extends BoardMasterVO {
     ugcTypeCd: string;
     useReply: boolean;
     useNickname: boolean;
+}
+
+export interface BoardReplyVO extends BoardMasterVO {
+    replyNo: number;
+    parentNo: number;
+    boardNo: number;
+    sortNo: number;
+	title: string;
+	contents: string;
+	viewType: string;
+    regUser: number;
+    regDt: string;
+    updUser: number;
+    updDt: string;
 }
 
 export interface UgcVO extends BoardUgcVO {

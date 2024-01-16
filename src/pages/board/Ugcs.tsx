@@ -13,7 +13,6 @@ export default function Ugcs() {
     const [ugcs,setUgcs] = useState([] as BoardUgcVO[]);
     const [bestUgcs,setBestUgcs] = useState([] as BoardUgcVO[]);
     const [recommendUgcs,setRecommendUgcs] = useState([] as BoardUgcVO[]);
-    const [category, setCategory] =useState("");
     const navigate = useNavigate();
     const actions = [
       { icon: <ShareIcon />, name: 'Share' },
@@ -46,7 +45,6 @@ export default function Ugcs() {
     useEffect(()=>{
       axios.get("/board/special-ugcs").then((r: any)=>{
         if(r && r.data) {
-          console.log(r.data)
           setRecommendUgcs(r.data.recommendUgcs);
         }
       })
@@ -64,8 +62,7 @@ export default function Ugcs() {
               <Grid>
                 <Swiper
                   spaceBetween={50}
-                  slidesPerView={3}
-                  onSlideChange={() => console.log('slide change')}
+                  slidesPerView={3.3}
                   onSwiper={(swiper: SwiperClass) => console.log(swiper)}
                 >
                   {
@@ -134,7 +131,7 @@ export default function Ugcs() {
                                   {
                                       item.isLiked?   
                                       <Favorite color="error"/>
-                                      :<FavoriteBorder/>
+                                      :<FavoriteBorder color="error"/>
                                   }
                                 </IconButton>
                               </CardContent>

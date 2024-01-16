@@ -33,7 +33,6 @@ export default function ProductOptionDialog(props: SimpleDialogProps) {
   };
 
   useEffect(()=>{
-    console.log("dd")
   },[])
 
   return (

@@ -43,7 +43,7 @@ export interface PasswordVO extends MemberPasswordVO {
     newPassword: string;
 }
 
-export interface LikeMasterVO {
+export interface LikeMasterVO extends MemberVO {
 	likeNo:number;
 	likeTypeCd: string;
 	targetNo: number;

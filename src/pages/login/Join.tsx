@@ -102,7 +102,7 @@ export default function Join () {
                         onClick={join}
                         sx={{ mt: 3, mb: 2 }}
                         >
-                        회원가입
+                            회원가입
                         </Button>
                     </Box>
                     </Box>

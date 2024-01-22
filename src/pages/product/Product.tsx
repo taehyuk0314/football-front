@@ -203,7 +203,7 @@ export default function Product() {
                             <Grid container spacing={2}>
                                 <Grid item xs={8}>
                                     <Button 
-                                        sx={{mt: 5,  height:100, width:'100%' }} 
+                                        sx={{mt: 5,  height:100, width:'100%' }}                                         
                                         variant="contained" 
                                         color="success"
                                         onClick={btnOrder}

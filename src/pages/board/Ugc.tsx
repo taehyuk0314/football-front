@@ -1,19 +1,33 @@
-import { Avatar, Box, Button, Card, CardContent, CardMedia, Container, Grid, TextField, Typography } from "@mui/material";
+import { Avatar, Box, Button, Card, CardContent, CardMedia, Container, Divider, Grid, IconButton, List, ListItem, ListItemAvatar, ListItemText, Menu, MenuItem, TextField, Typography } from "@mui/material";
 import axios from "axios";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { BoardReplyVO, BoardUgcVO } from "./vo/board.vo";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import MessageIcon from '@mui/icons-material/Message';
 import CommonReadMore from "../common/CommonReadmore";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 export default function Ugc() {
+
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+
     const params = useParams();
     const navigation = useNavigate();
     const [board,setBoard] = useState({} as BoardUgcVO);
     const [reply,setReply] = useState({} as BoardReplyVO);
     const [replies,setReplies] = useState([] as BoardReplyVO[]);
-    const [param,setParam] = useState({ dataUrl:"/board/ugc/replies/"+params.boardNo} as any);
+    const [param, setParam] = useState({ dataUrl:"/board/ugc/replies/"+params.boardNo} as any);
+    const childComponentRef = useRef();
+
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     const btnLiked = () =>{
         const params = { likeTypeCd: "003001", targetNo : board.boardNo };
@@ -36,19 +50,90 @@ export default function Ugc() {
     const insertReply = () => {
         axios.post("/board/reply",reply).then(()=>{
             setReply({...reply,contents:""});
+            const refs = (childComponentRef.current) as any;
+            refs.reset();
         })
     }
     const contents = () => {
-        console.log("1"+replies)
         return (
             <div>
-                {
-                    replies && replies.map((item)=>{
-                        return <div key={item.replyNo}>
-                            {item.contents}
-                        </div>
-                    })
-                }
+                <Divider />
+                <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                    {
+                        replies && replies.map((item)=>{
+                            return <ListItem 
+                                        key={item.replyNo} 
+                                        alignItems="flex-start"
+                                        secondaryAction={
+                                            <>
+                                                <Typography component="span">
+                                                    {item.regDt}
+                                                </Typography>
+                                                
+                                                <IconButton 
+                                                    aria-label="more"
+                                                    id="long-button"
+                                                    aria-controls={open ? 'long-menu' : undefined}
+                                                    aria-expanded={open ? 'true' : undefined}
+                                                    aria-haspopup="true"
+                                                    onClick={handleClick}                                                
+                                                    edge="end" 
+                                                >
+                                                    <MoreVertIcon />
+                                                </IconButton>
+                                                <Menu
+                                                    id="long-menu"
+                                                    elevation={0}
+                                                    MenuListProps={{
+                                                        'aria-labelledby': 'demo-customized-button',
+                                                    }}
+                                                    anchorEl={anchorEl}
+                                                    open={open}
+                                                    onClose={handleClose}
+                                                >   
+                                                    {
+                                                        item.isApply?
+                                                        <>
+                                                            <MenuItem onClick={handleClose}>
+                                                                수정하기
+                                                            </MenuItem>
+                                                            <MenuItem onClick={handleClose}>
+                                                                삭제하기
+                                                            </MenuItem>
+                                                        </>:
+                                                        <>
+                                                            <MenuItem onClick={handleClose}>
+                                                                답글달기
+                                                            </MenuItem>
+                                                        </>   
+                                                    }
+                                                </Menu>                                                
+                                            </>
+                                          }
+                                    >
+                                        <ListItemAvatar>
+                                            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                        primary={item.nickNm}
+                                        secondary={
+                                            <React.Fragment>
+                                                <Typography
+                                                    sx={{ display: 'inline' }}
+                                                    component="span"
+                                                    variant="body2"
+                                                    color="text.primary"
+                                                >
+                                                    {item.contents}
+                                                </Typography>
+                                            </React.Fragment>
+                                        }
+                                        />
+                                        
+                                    </ListItem>
+                        })
+                    }
+                </List>                
             </div>
         ) as JSX.Element
     }
@@ -115,8 +200,10 @@ export default function Ugc() {
                         댓글 
                     </Button>
                     </CardContent>
+                    <CardContent>
+                        <CommonReadMore ref={childComponentRef} dataUrl={param.dataUrl} updateItem={setReplies} content={contents()} />
+                    </CardContent>
                 </Card>  
-                <CommonReadMore dataUrl={param.dataUrl} updateItem={setReplies} content={contents()} />
             </Container>
             <Box maxWidth="lg" 
                 sx={{ px:0, position: 'fixed',bottom:0 ,borderRadius: '16px',justifyContent: "center", margin: '0 auto', left: 0, right: 0}}
@@ -135,11 +222,12 @@ export default function Ugc() {
                             name="contents"
                             placeholder="소중한 댓글을 달아주세요."
                             multiline
+                            value={reply.contents}
                             onChange={handleChange}
                             sx={{ width:'100%' }} 
                             color="success"
                             rows={2}
-                            />
+                        />
                     </Grid>
                     <Grid sx={{width:'20%'}}>
                         <Button 

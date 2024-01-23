@@ -8,6 +8,7 @@ export interface BoardMasterVO extends LikeMasterVO {
     contents: string;
     likeCnt: number;
     viewCnt: number;
+    isApply: boolean;
     regUser: number;
     regDt: string;
     updUser: number;

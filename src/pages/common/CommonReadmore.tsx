@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { DataTableOVO } from "./vo/DataTableOVO.vo";
 import axios from "axios";
 import _ from "lodash";
@@ -12,19 +12,26 @@ export interface Props {
     content: JSX.Element;
     updateItem: any;
 }
-const CommonReadMore =(
-    {
+const CommonReadMore =forwardRef(
+    ({
         dataUrl,
         dataParams,
         pageLength = 20,
         noDataMessage = "없성",
         content,
         updateItem        
-      }: Props
+      }: Props,ref
 ) => {
+    useImperativeHandle(ref, () => ({
+        // 부모 컴포넌트에서 사용할 함수를 선언
+        reset
+      }))
+     
     const [data, setData] = useState({ items: [] as Array<any>, recordsTotal: 0, pageNum: 0 } as DataTableOVO<any>);
     const reset =()  => {
-        setData({ items: [] as Array<any>, recordsTotal: 0, pageNum: 0 });
+        data.pageNum =0;
+        data.recordsTotal =0;
+        getData();
     }
     
     const getData = (readmore = false) =>{
@@ -38,7 +45,7 @@ const CommonReadMore =(
         axios.get(dataUrl, { params: params }).then((r) => {
             let items = r.data.items;
             if (readmore) {
-                items = data.items.concat(r.data.items);
+                items = data.items.concat(items);
             }
             setData({items:items, recordsTotal: r.data.recordsTotal, pageNum: r.data.pageNum});
             updateItem(items) ;
@@ -70,5 +77,5 @@ const CommonReadMore =(
                 }
             </div>
     )
-}
+})
 export default CommonReadMore;

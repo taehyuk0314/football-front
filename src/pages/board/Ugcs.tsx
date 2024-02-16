@@ -8,11 +8,11 @@ import ModeIcon from '@mui/icons-material/Mode';
 import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react';
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
+import RecommendUgcs from "./RecommnedUgcs";
 
 export default function Ugcs() {
     const [ugcs,setUgcs] = useState([] as BoardUgcVO[]);
     const [bestUgcs,setBestUgcs] = useState([] as BoardUgcVO[]);
-    const [recommendUgcs,setRecommendUgcs] = useState([] as BoardUgcVO[]);
     const navigate = useNavigate();
     const actions = [
       { icon: <ShareIcon />, name: 'Share' },
@@ -43,62 +43,11 @@ export default function Ugcs() {
       });        
   }
     useEffect(()=>{
-      axios.get("/board/special-ugcs").then((r: any)=>{
-        if(r && r.data) {
-          setRecommendUgcs(r.data.recommendUgcs);
-        }
-      })
       onSearch();
     },[])
     return(
         <Container maxWidth="lg" sx={{ py: 5, height: '100%'}}>
-          {
-            
-            (recommendUgcs && recommendUgcs.length) && 
-            <>
-              <Typography sx={{ py:3}} variant="h5" color="text.secondary" component="div">
-                추천 커뮤니티
-              </Typography>               
-              <Grid>
-                <Swiper
-                  spaceBetween={50}
-                  slidesPerView={3.3}
-                  onSwiper={(swiper: SwiperClass) => console.log(swiper)}
-                >
-                  {
-                    recommendUgcs.map((item: BoardUgcVO)=>{
-                        return  <SwiperSlide key={item.boardNo}>
-                                  <CardActionArea sx={{my:2}} component="a" onClick={()=>{navigate("/ugc/"+item.boardNo)}}>
-                                    <Grid item xs={12} sm={6} md={4}>
-                                      <Card
-                                        sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                                      >
-                                        <CardMedia
-                                          component="div"
-                                          sx={{
-                                            // 16:9
-                                            pt: '56.25%',
-                                          }}
-                                          image="https://source.unsplash.com/random?wallpapers"
-                                        />
-                                        <CardContent sx={{ flexGrow: 1 }}>
-                                          <Typography gutterBottom variant="h5" component="h2">
-                                            { item.title }
-                                          </Typography>
-                                          <Typography>
-                                          { item.contents }
-                                          </Typography>
-                                        </CardContent>
-                                      </Card>
-                                    </Grid>      
-                                  </CardActionArea>                    
-                                </SwiperSlide>
-                    })
-                  }
-                </Swiper>          
-              </Grid>
-            </>
-          }
+          <RecommendUgcs/>
           <Grid container>
             <Grid item md={12}>
               <Box

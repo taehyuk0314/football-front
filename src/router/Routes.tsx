@@ -9,6 +9,7 @@ import LayoutMain from "../layout/LayoutMain";
 import Cart from "../pages/mypage/Cart";
 import UgcForm from "../pages/board/UgcForm";
 import Product from "../pages/product/Product";
+import Order from "../pages/order/Order";
 
  const routes = [
             {
@@ -62,6 +63,18 @@ import Product from "../pages/product/Product";
                         path: "/product/:productNo",
                         element: <Product />,
                         meta: {title:""}
+                    },
+                    {
+                        id:"order",
+                        path: "/order/:orderNo",
+                        element: <Order />,
+                        meta: {title:"주문상세"}
+                    },
+                    {
+                        id:"paymentComplete",
+                        path: "/payment/complete",
+                        element: <Order />,
+                        meta: {title:"주문상세"}
                     },
                 ]
             }, 

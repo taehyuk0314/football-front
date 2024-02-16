@@ -6,7 +6,7 @@ import { getLocalStorageObject, getNumber, putLocalStorageObject } from "../../c
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { IconButton } from '@mui/material';
-import { OrderMasterVO } from "../order/vo/order.vo";
+import { OrderMasterVO, OrderProductVO, OrderVO } from "../order/vo/order.vo";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Constants from "../../constants";
@@ -17,7 +17,7 @@ export default function Product() {
     const params = useParams();
     const navigation = useNavigate();
     const [product,setProduct] = useState({} as OrderMasterVO);
-    const [orders,setOrders] = useState([] as OrderMasterVO[]);
+    const [orders,setOrders] = useState([] as OrderProductVO[]);
 
     const _ = require('lodash');
 
@@ -42,10 +42,16 @@ export default function Product() {
             alert("옵션을 선택해주세요");
             return;
         }
-        axios.post("/order",orders).then((r)=>{
-            navigation("/order/"+r.data.orderNo);
+
+        let order = {} as OrderVO;
+        order.products =orders;
+        order.orderCnt = orders.length;
+        order.orderType= '009001';
+        axios.post("/order",order).then((r)=>{
+            navigation("/order/"+r.data);
         })
     }
+    
     const btnCart = () => {
         if(!orders.length) {
             alert("구매하실 상품을 선택해주세요.")
@@ -103,7 +109,7 @@ export default function Product() {
           recentProductInfo = new Array<CartMasterVO>();
         }
     }    
-    const btnProductCounting = (param: OrderMasterVO, count: number) => {
+    const btnProductCounting = (param: OrderProductVO, count: number) => {
         let findOrder = orders.findIndex(item => item.optionNo === param.optionNo);
         
         let copiedItems = [...orders];
@@ -183,7 +189,7 @@ export default function Product() {
                                     orders.length?
                                     <Box>
                                         {
-                                            orders.map((item: OrderMasterVO,index)=>{
+                                            orders.map((item: OrderProductVO,index)=>{
                                                 return  <Box key={index} display={"flex"} sx={{ pt:3, justifyContent: "space-between"}}>
                                                             <Typography variant="h5" component="div">
                                                                 {item.productNm + "["+ item.optionNm+"]"}

@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import axios from "axios";
 import { BoardMasterVO } from "../board/vo/board.vo";
+import RecommendUgcs from "../board/RecommnedUgcs";
 
 export default function Main() {
     const [board,setBoard] = useState([] as BoardMasterVO[]);
@@ -27,7 +28,7 @@ export default function Main() {
         <>
             <CssBaseline />
             <main>
-                {/* Hero unit */}
+                
                 <Box
                 sx={{
                     bgcolor: 'background.paper',
@@ -35,6 +36,7 @@ export default function Main() {
                     pb: 6,
                 }}
                 >
+                <RecommendUgcs/>    
                 <Container maxWidth="sm">
                     <Typography
                     component="h1"

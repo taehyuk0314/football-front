@@ -2,18 +2,21 @@ import axios from "axios"
 import { Fragment, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom";
 import { OrderVO } from "./vo/order.vo";
-import { Avatar, Button, Card, Container, Divider, List, ListItem, ListItemAvatar, ListItemText, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Avatar, Button, Card, Container, ListItemAvatar, ListItemText, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import Paper from '@mui/material/Paper';
 import { getNumber } from "../../commonUtils";
+import { CodeMasterVO } from "../common/vo/code.vo";
+import AddressSearchPop from "../mypage/AddressSearchPop";
 
 export default function Order() {
     const [order, setOrder] = useState({} as OrderVO);
+    const [paymentTypes, setPaymentTypes] = useState([] as CodeMasterVO[]);
     const params = useParams();
     const navigation = useNavigate();
 
     const btnPayment = () =>{
-        axios.post(`/order/${params.orderNo}`,order).then(()=>{
-            navigation("/payment")
+        axios.put(`/order/${params.orderNo}`,order).then(()=>{
+            navigation("/order/payment")
         })
     }
     const totalPrice = () => {
@@ -26,7 +29,20 @@ export default function Order() {
         });
         return getNumber(price)+ "원"
     }
+    const SearchAddress = () => {
+        return <AddressSearchPop/>
+    }
+    const paymentTypeChange = (
+        event: React.MouseEvent<HTMLElement>,
+        paymentType: string,
+      ) => {
+        setOrder({...order,paymentType: paymentType})
+    };    
+
     useEffect(()=>{
+        axios.get(`/code/010`).then((r)=>{
+            setPaymentTypes(r.data);
+        })      
         axios.get("/order/"+params.orderNo).then((r: any)=>{
             if(!r.data.orderNo) {
                 navigation("/payment/complete");
@@ -37,10 +53,11 @@ export default function Order() {
 
     return(
         <Container maxWidth="lg" sx={{ py: 5, height: '100%',width:'100%'}}>
-            <Card>
+            <Card sx={{px:3, pb:3}}>
                 <Typography sx={{ py:3}} variant="h5" color="text.secondary" component="div">
                   배송지
-                </Typography>                      
+                </Typography>      
+                <Button onClick={SearchAddress}></Button>                
             </Card>
             <Card sx={{px:3, pb:3}}>
                 <Typography sx={{ py:3}} variant="h5" color="text.secondary" component="div">
@@ -92,6 +109,35 @@ export default function Order() {
                     </Table>
                     </TableContainer>                
             </Card>
+            <Card sx={{p:3}}>
+                <Typography sx={{ py:3}} variant="h5" color="text.secondary" component="div">
+                  결제 수단
+                </Typography>       
+                {
+                    paymentTypes && paymentTypes.length &&
+                    <ToggleButtonGroup
+                        sx={{ width:'100%'}}
+                        size="large"
+                        color="primary"
+                        value={order.paymentType}
+                        exclusive
+                        aria-label="Platform"
+                        onChange={paymentTypeChange}
+                        >
+                            {
+                                paymentTypes.map((item)=>{
+                                    return <ToggleButton 
+                                                key={item.code}
+                                                value={item.code}
+                                                sx={{ flexGrow:1 }}
+                                            >
+                                                {item.codeNm}
+                                            </ToggleButton>
+                                })                                
+                            }
+                    </ToggleButtonGroup>                
+                }               
+            </Card>            
             <Card sx={{px:3}}>
                 <Typography sx={{ py:3}} variant="h5" color="text.secondary" component="div">
                   총 금액

@@ -5,13 +5,9 @@ import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { MemberDeliveryVO } from '../member/vo/member.vo';
 
 export interface Props {
-  addr: any;
+  updateAddr: (item: MemberDeliveryVO)=>void;
 }
-const AddressSearchPop =forwardRef(
-  ({
-    addr        
-  }: Props,ref
-) => {
+const AddressSearchPop =(props:Props) => {
 
     const [deliveries, setDeliveries] = useState([] as MemberDeliveryVO[]);
     const [delivery, setDelivery] = useState({} as MemberDeliveryVO);
@@ -44,7 +40,7 @@ const AddressSearchPop =forwardRef(
     }
 
     const updateAddr = (item: MemberDeliveryVO) =>{
-      addr(item)
+      props.updateAddr(item);
     }
     const addressList = () =>{
       axios.get("/mypage/deliveries").then((r)=>{
@@ -115,5 +111,5 @@ const AddressSearchPop =forwardRef(
       </DialogContent>
     </>
   )
-})
+}
 export default AddressSearchPop

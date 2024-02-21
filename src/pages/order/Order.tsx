@@ -7,6 +7,7 @@ import Paper from '@mui/material/Paper';
 import { getNumber } from "../../commonUtils";
 import { CodeMasterVO } from "../common/vo/code.vo";
 import AddressSearchPop from "../mypage/AddressSearchPop";
+import { MemberDeliveryVO } from "../member/vo/member.vo";
 
 export default function Order() {
     const [order, setOrder] = useState({} as OrderVO);
@@ -22,6 +23,7 @@ export default function Order() {
             navigation("/order/payment")
         })
     }
+
     const totalPrice = () => {
         if(!order.products) {
             return 0;
@@ -32,9 +34,11 @@ export default function Order() {
         });
         return getNumber(price)+ "원"
     }
+
     const handleClose = () =>{
         setOpen(false);
     }
+
     const SearchAddress = () => {
         return <Dialog
             onClose={handleClose}
@@ -43,14 +47,19 @@ export default function Order() {
             aria-labelledby="customized-dialog-title"
             open={open}
          >
-            <AddressSearchPop addr={setOrder}/>
+            <AddressSearchPop updateAddr={updateAddress}/>
         </Dialog >
+    }
+    const updateAddress = (item: MemberDeliveryVO) => {
+        const addr = item  as OrderVO;
+        setOrder(Object.assign(order, addr));
+        handleClose();
     }
     const paymentTypeChange = (
         event: React.MouseEvent<HTMLElement>,
         paymentType: string,
       ) => {
-        setOrder({...order,paymentType: paymentType})
+        setOrder({...order,paymentType: paymentType});
     };    
 
     useEffect(()=>{
@@ -69,7 +78,7 @@ export default function Order() {
         <Container maxWidth="lg" sx={{ py: 5, height: '100%',width:'100%'}}>
             <Card sx={{px:3, pb:3}}>
                 <Typography sx={{ py:3}} variant="h5" color="text.secondary" component="div">
-                  배송지 {order.addr}
+                  배송지 선택
                 </Typography>      
                 { 
                     order.addr?

@@ -26,7 +26,25 @@ export interface ProfileMasterVO extends MemberProfileVO {
     introduction: string;    
 }
 
-export interface MemberVO extends ProfileMasterVO {
+export interface MemberDeliveryVO extends ProfileMasterVO {
+    deliveryNo: number;
+    memNo: number;
+    postNo: string;
+    addr: string;
+    addrDetail: string;
+    addrSerialNo: number;
+    addrType: string;
+    recvNm: string;
+    hpNo: string;
+    city: string;
+    defaultDlvryYn: boolean;
+    viewType: string;
+    regUser: number;
+    regDt: string;
+    updUser: number;
+    updDt: string;
+}
+export interface MemberVO extends MemberDeliveryVO {
     
 }
 

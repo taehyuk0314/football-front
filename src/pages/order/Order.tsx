@@ -2,7 +2,7 @@ import axios from "axios"
 import { Fragment, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom";
 import { OrderVO } from "./vo/order.vo";
-import { Avatar, Button, Card, Container, ListItemAvatar, ListItemText, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
+import { Avatar, Button, Card, Container, Dialog, DialogProps, Divider, List, ListItem, ListItemAvatar, ListItemText, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import Paper from '@mui/material/Paper';
 import { getNumber } from "../../commonUtils";
 import { CodeMasterVO } from "../common/vo/code.vo";
@@ -13,6 +13,9 @@ export default function Order() {
     const [paymentTypes, setPaymentTypes] = useState([] as CodeMasterVO[]);
     const params = useParams();
     const navigation = useNavigate();
+    const [open, setOpen] = useState(false);
+    const [fullWidth, setFullWidth] = useState(true);
+    const [maxWidth, setMaxWidth] = useState<DialogProps['maxWidth']>('sm');
 
     const btnPayment = () =>{
         axios.put(`/order/${params.orderNo}`,order).then(()=>{
@@ -29,8 +32,19 @@ export default function Order() {
         });
         return getNumber(price)+ "원"
     }
+    const handleClose = () =>{
+        setOpen(false);
+    }
     const SearchAddress = () => {
-        return <AddressSearchPop/>
+        return <Dialog
+            onClose={handleClose}
+            fullWidth={fullWidth}
+            maxWidth={maxWidth}
+            aria-labelledby="customized-dialog-title"
+            open={open}
+         >
+            <AddressSearchPop addr={setOrder}/>
+        </Dialog >
     }
     const paymentTypeChange = (
         event: React.MouseEvent<HTMLElement>,
@@ -55,9 +69,27 @@ export default function Order() {
         <Container maxWidth="lg" sx={{ py: 5, height: '100%',width:'100%'}}>
             <Card sx={{px:3, pb:3}}>
                 <Typography sx={{ py:3}} variant="h5" color="text.secondary" component="div">
-                  배송지
+                  배송지 {order.addr}
                 </Typography>      
-                <Button onClick={SearchAddress}></Button>                
+                { 
+                    order.addr?
+                    <List sx={{ border: '1px solid black', width: '100%', bgcolor: 'background.paper' }}>
+                        <ListItem  alignItems="flex-start">
+                            {order.addr+"("+order.addrDetail+")"}
+                        </ListItem>
+                        <ListItem  alignItems="flex-start">
+                            {order.recvNm}
+                            <div className='css-bulkhead'/>
+                            {order.hpNo}
+                        </ListItem>
+                        <ListItem  alignItems="flex-start">
+                            <Button onClick={()=>{setOpen(true)}}>배송지 변경</Button>                
+                        </ListItem>
+                    </List>
+                    :
+                    <Button onClick={()=>{setOpen(true)}}>주소 찾기</Button>                
+                }
+                <SearchAddress />
             </Card>
             <Card sx={{px:3, pb:3}}>
                 <Typography sx={{ py:3}} variant="h5" color="text.secondary" component="div">

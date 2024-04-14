@@ -170,7 +170,6 @@ export default function Product() {
                                             return !item.optionCnt?
                                             <MenuItem
                                                 key={item.optionNo}
-                                                placeholder=""
                                             >
                                                  {item.optionNm + "(품절)"}
                                             </MenuItem>:

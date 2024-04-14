@@ -39,6 +39,7 @@ export default function UgcForm() {
       ) => {
         setUgc({...ugc,ugcTypeCd: ugcTypeCd})
     };    
+    
     useEffect(()=>{
         axios.get(`/code/007`).then((r)=>{
             setCodes(r.data);
